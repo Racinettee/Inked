@@ -1,0 +1,11 @@
+function puts(cstring str) as int end
+
+function greet() as int
+	puts("hello")
+	puts("Friend")
+	puts("Kawaii pantsu kun")
+end
+
+greet()
+greet()
+greet()

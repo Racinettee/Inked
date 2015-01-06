@@ -1,0 +1,56 @@
+# depslib dependency file v1.0
+1420480242 source:/home/steve/Project/Inked/parser.y
+	"node.h"
+
+1420435813 /home/steve/Project/Inked/node.h
+	<iostream>
+	<vector>
+	<llvm/IR/Value.h>
+
+1420480493 source:/home/steve/Project/Inked/tokens.l
+	<string>
+	"node.h"
+	"parser.parser.hh"
+
+1420480376 /home/steve/Project/Inked/parser.parser.hh
+
+1420439401 source:/home/steve/Project/Inked/codegen.cpp
+	"node.h"
+	"codegen.h"
+	"parser.parser.hh"
+
+1420347461 /home/steve/Project/Inked/codegen.h
+	<stack>
+	<llvm/IR/Module.h>
+	<llvm/IR/Function.h>
+	<llvm/IR/Type.h>
+	<llvm/IR/DerivedTypes.h>
+	<llvm/IR/LLVMContext.h>
+	<llvm/PassManager.h>
+	<llvm/IR/Instructions.h>
+	<llvm/IR/CallingConv.h>
+	<llvm/Bitcode/ReaderWriter.h>
+	<llvm/Analysis/Verifier.h>
+	<llvm/Assembly/PrintModulePass.h>
+	<llvm/IR/IRBuilder.h>
+	<llvm/Support/TargetSelect.h>
+	<llvm/ExecutionEngine/GenericValue.h>
+	<llvm/ExecutionEngine/JIT.h>
+	<llvm/Support/raw_ostream.h>
+
+1420261504 source:/home/steve/Project/Inked/main.cpp
+	<iostream>
+	"codegen.h"
+	"node.h"
+
+1420262291 source:/home/steve/Project/Inked/tokens.scanner.cc
+	<stdio.h>
+	<string.h>
+	<errno.h>
+	<stdlib.h>
+	<inttypes.h>
+	<string>
+	"node.h"
+	"parser.parser.hh"
+	<unistd.h>
+

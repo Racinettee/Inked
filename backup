@@ -1,0 +1,17 @@
+| ident ident TLPAREN func_decl_args TRPAREN block { $$ = new NFunctionDeclaration(*$1, *$2, *$4, *$6); delete $4; }
+          | ident ident block { VariableList vl; $$ = new NFunctionDeclaration(*$1, *$2, vl, *$3); }
+          ;
+          
+function f(int a) as int
+ ...
+end
+
+%token <token> TCSTRKW TSTRINGKW
+
+cstring                 SAVE_TOKEN;return TIDENTIFIER;//return TOKEN(TCSTRKW);
+
+long                    return TOKEN(TLONGKW);
+
+string                  ;//return TOKEN(TSTRINGKW);
+
+double                  return TOKEN(TDBLKW);
