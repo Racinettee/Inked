@@ -11,13 +11,17 @@ the syntax looks a little like ruby with some inspiration from c
 
 an example:
 
-  function puts(cstring str) as int end
-
-  function greet() as int<br>
-    puts("hello")<br>
-	  puts("Friend")<br>
-  end<br>
-
-  greet()<br>
-  greet()<br>
-  greet()
+proto puts(cstring str) as int<br>
+proto gets(cstring str) as cstring<br>
+<br>
+function greet() as long<br>
+	puts("hello")<br>
+	puts("Friend")<br>
+	cstring inp = gets("               ")<br>
+	puts("You entered:")<br>
+	puts(inp)<br>
+end<br>
+<br>
+greet()<br>
+greet()<br>
+greet()
