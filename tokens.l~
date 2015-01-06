@@ -15,18 +15,14 @@ as                      return TOKEN(TASKW);
 break                   return TOKEN(TBREAKKW);
 const                   return TOKEN(TCONSTKW);
 class                   return TOKEN(TCLSKW);
-cstring                 SAVE_TOKEN;return TIDENTIFIER;//return TOKEN(TCSTRKW);
 continue                return TOKEN(TCONTKW);
 do                      return TOKEN(TDOKW);
-double                  return TOKEN(TDBLKW);
 else                    return TOKEN(TELSEKW);
 end                     return TOKEN(TENDKW);
 exit                    return TOKEN(TEXITKW);
 for                     return TOKEN(TFORKW);
 function                return TOKEN(TFCTNKW);
 if                      return TOKEN(TIFKW);
-long                    return TOKEN(TLONGKW);
-string                  ;//return TOKEN(TSTRINGKW);
 unless                  return TOKEN(TUNLKW);
 while                   return TOKEN(TWHLKW);
 

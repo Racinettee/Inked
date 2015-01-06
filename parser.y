@@ -28,7 +28,7 @@ void yyerror(const char *s) { printf("error at line: %llu %s\n", linecount, s); 
 %token <string> TIDENTIFIER TINTEGER TDOUBLE TSLITERAL
 %token <token> TBREAKKW TCONSTKW TCLSKW TCONTKW TDOKW TDBLKW TELSEKW
 %token <token> TENDKW TEXITKW TFORKW TFCTNKW TIFKW TLONGKW TUNLKW
-%token <token> TWHLKW TASKW
+%token <token> TWHLKW TASKW TPROTOKW
 %token <token> TQUOTE TSQUOTE
 %token <token> TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
 %token <token> TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT
@@ -77,17 +77,18 @@ var_decl : ident ident { $$ = new NVariableDeclaration(*$1, *$2); }
        | ident ident TEQUAL expr { $$ = new NVariableDeclaration(*$1, *$2, $4); }
        ;
 
-func_proto : TFCTNKW ident TENDKW { }
-			  | TFCTNKW ident TLPAREN func_decl_args TRPAREN TENDKW { }
-			  | TFCTNKW ident TASKW ident TENDKW { }
-			  //| TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident TENDKW { puts("Found function prototype");$$ = new NFunctionPrototype($7, $2, $4); delete $4; }
-			  ;
-
 func_decl : TFCTNKW ident block { /* generate void function */ /*VariableList vl; $$ = new NFunctionDeclaration(*$1, *$2, vl, *$3);*/}
 			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN block { /* generate void function with args */ }
 			 | TFCTNKW ident TASKW ident block {  VariableList vl; $$ = new NFunctionDeclaration(*$4, *$2, vl, *$5);}
-			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident TENDKW { puts("Found function prototype");$$ = new NFunctionPrototype(*$7, *$2, *$4); delete $4; }
-			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block { puts("Found function declaration");$$ = new NFunctionDeclaration(*$7, *$2, *$4, *$8); delete $4; }
+			 /************************
+			  *  Function prototype
+			  ***********************/
+			 | TPROTOKW ident { VariableList vl; NIdentifier type("void");$$ = new NFunctionPrototype(type, *$2, vl);}
+			 | TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident { puts("Fnd f prototype");$$=new NFunctionPrototype(*$7,*$2,*$4); delete $4;}
+			 /****************************
+			  * Function definitions
+			  ***************************/
+			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block { puts("Found f declaration");$$ = new NFunctionDeclaration(*$7, *$2, *$4, *$8); delete $4; }
 		    ;
 
 func_decl_args : /*blank*/  { $$ = new VariableList(); }

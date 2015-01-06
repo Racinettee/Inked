@@ -1,9 +1,8 @@
-function puts(cstring str) as int end
+proto puts(cstring str) as int
 
-function greet() as int
+function greet() as long
 	puts("hello")
 	puts("Friend")
-	puts("Kawaii pantsu kun")
 end
 
 greet()

@@ -60,10 +60,13 @@ GenericValue CodeGenContext::runCode() {
 //static const Type *typeOf(const NIdentifier& type)
 static Type* typeOf(const NIdentifier& type)
 {
-	if (type.name.compare("int") == 0) {
+  if (type.name == "void") {
+    return Type::getVoidTy(getGlobalContext());
+  }
+	else if (type.name.compare("int") == 0) {
 		return Type::getInt32Ty(getGlobalContext());
 	}
-	if (type.name.compare("long") == 0) {
+	else if (type.name.compare("long") == 0) {
     return Type::getInt64Ty(getGlobalContext());
 	}
 	else if (type.name.compare("double") == 0) {
@@ -72,6 +75,7 @@ static Type* typeOf(const NIdentifier& type)
 	else if (type.name.compare("cstring") == 0) {
     return Type::getInt8PtrTy(getGlobalContext());
 	}
+	cout << "Warning: Type of '" << type.name << "' unrecognized\n";
 	return Type::getVoidTy(getGlobalContext());
 }
 
@@ -108,7 +112,6 @@ Value* NIdentifier::codeGen(CodeGenContext& context)
 
 Value* NMethodCall::codeGen(CodeGenContext& context)
 {
-	puts("Inside method call");
 	Function *function = context.module->getFunction(id.name.c_str());
 	std::cout << "Creating call to function: " << id.name.c_str() <<
 	  function << std::endl;
@@ -188,7 +191,6 @@ Value* NVariableDeclaration::codeGen(CodeGenContext& context)
 
 Value* NFunctionPrototype::codeGen(CodeGenContext& ctx)
 {
-  puts("parsing function prototype");
   vector<Type*> argTypes;
 	VariableList::const_iterator it;
 	for (it = arguments.begin(); it != arguments.end(); it++) {
@@ -202,20 +204,7 @@ Value* NFunctionPrototype::codeGen(CodeGenContext& ctx)
   llvm::FunctionType *putsType =
     llvm::FunctionType::get(typeOf(type)/*builder.getInt32Ty()*/, argsRef, false);
   llvm::Constant *putsFunc = ctx.module->getOrInsertFunction(id.name.c_str()/*"puts"*/, putsType);
-	//BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", function, 0);
 
-	//context.pushBlock(bblock);
-
-	//for (it = arguments.begin(); it != arguments.end(); it++) {
-	//	(**it).codeGen(context);
-	//}
-
-	//block.codeGen(context);
-	//ReturnInst::Create(getGlobalContext(), bblock);
-
-	//context.popBlock();
-	//std::cout << "Creating function proto: " << id.name << std::endl;
-	puts("parsed");
 	return putsFunc;
 }
 
