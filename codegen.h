@@ -23,6 +23,36 @@ using namespace llvm;
 
 class NBlock;
 
+class CompilerEngine {
+public:
+  std::stack<BasicBlock*> block_stack;
+  Function*               current_function;
+  IRBuilder<>             builder;
+  Module*                 main_module;
+  std::map<std::string, Value*>* current_lookup;
+  // ------------------------------------------
+  static CompilerEngine* inst;
+  CompilerEngine(): module(new Module("main", getGlobalContext())), builder(getGlobalContext())
+  {
+    if(inst!=nullptr)
+      throw;
+  }
+  void StartGen();
+  void PushBlock(BasicBlock* bb)
+  {
+    block_stack.push(bb);
+    builder.SetInsertPoint(bb);
+  }
+  void PopBlock()
+  {
+    if(block_stack.top() != nullptr)
+    {
+      block_stack.pop();
+      if(block_stack.top() != nullptr)
+        builder.SetInsertPoint(block_stack.top());
+    }
+  }
+};
 class CodeGenBlock {
 public:
     BasicBlock *block;
@@ -30,21 +60,19 @@ public:
 };
 
 class CodeGenContext {
-    std::stack<CodeGenBlock *> blocks;
-    Function *mainFunction;
-
+  std::stack<CodeGenBlock *> blocks;
+  Function *mainFunction;
 public:
-	 IRBuilder<> builder;
-    Module *module;
+  IRBuilder<> builder;
+  Module *module;
 
-    CodeGenContext(): module(new Module("main", getGlobalContext())), builder(getGlobalContext())
-    {
-    }
-
-    void generateCode(NBlock& root);
-    GenericValue runCode();
-    std::map<std::string, Value*>& locals() { return blocks.top()->locals; }
-    BasicBlock *currentBlock() { return blocks.top()->block; }
-    void pushBlock(BasicBlock *block) { blocks.push(new CodeGenBlock()); blocks.top()->block = block; }
-    void popBlock() { CodeGenBlock *top = blocks.top(); blocks.pop(); delete top; }
+  CodeGenContext(): module(new Module("main", getGlobalContext())), builder(getGlobalContext())
+  {
+  }
+  void generateCode(NBlock& root);
+  GenericValue runCode();
+  std::map<std::string, Value*>& locals() { return blocks.top()->locals; }
+  BasicBlock *currentBlock() { return blocks.top()->block; }
+  void pushBlock(BasicBlock *block) { blocks.push(new CodeGenBlock()); blocks.top()->block = block; }
+  void popBlock() { CodeGenBlock *top = blocks.top(); blocks.pop(); delete top; }
 };

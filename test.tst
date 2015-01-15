@@ -1,14 +1,16 @@
 proto puts(cstring str) as int
 proto gets(cstring str) as cstring
+proto printf(cstring str) as int
 
-function greet() as long
+function greet(int param)
+	puts("attempting to assign param")
+	int x = param
+	printf("%i", x)
 	puts("hello")
-	puts("Friend")
-	cstring inp = gets("               ")
-	puts("You entered:")
-	puts(inp)
 end
 
-greet()
-greet()
-greet()
+greet(2)
+greet(4)
+greet(6)
+
+

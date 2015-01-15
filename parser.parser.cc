@@ -484,10 +484,10 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    60,    60,    63,    64,    67,    67,    68,    71,    72,
-      73,    76,    77,    80,    81,    82,    86,    87,    91,    94,
-      95,    96,    99,   102,   104,   105,   108,   109,   110,   111,
-     112,   113,   114,   117,   118,   119,   122,   122,   122,   122,
-     122,   122,   123,   123,   123,   123
+      73,    76,    77,    84,    85,    89,    90,    91,    92,    95,
+      96,    97,   100,   103,   105,   106,   109,   110,   111,   112,
+     113,   114,   115,   118,   119,   120,   123,   123,   123,   123,
+     123,   123,   124,   124,   124,   124
 };
 #endif
 
@@ -551,13 +551,13 @@ static const yytype_int16 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        0,    22,    24,    25,    23,     0,     0,     0,     0,     2,
-       3,     5,     6,    28,    30,    29,     7,     0,    16,    28,
+       3,     5,     6,    28,    30,    29,     7,     0,    13,    28,
        0,     1,     4,     0,    33,    11,    36,    37,    38,    39,
       40,    41,    42,    43,    44,    45,     0,     0,    19,     0,
-       0,    13,    19,    32,    26,    34,     0,     0,    31,     0,
+       0,    15,    19,    32,    26,    34,     0,     0,    31,     0,
       20,     0,    10,     0,     8,     0,     0,    27,     0,    12,
-      15,     0,     0,     9,     0,    35,     0,    14,    21,     0,
-       0,    17,    18
+      17,     0,     0,     9,     0,    35,     0,    16,    21,     0,
+       0,    14,    18
 };
 
   /* YYPGOTO[NTERM-NUM].  */
@@ -649,7 +649,7 @@ static const yytype_uint8 yyr1[] =
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     1,     1,     2,     1,     1,     1,     2,     3,
-       2,     2,     4,     3,     6,     5,     2,     7,     8,     0,
+       2,     2,     4,     2,     7,     3,     6,     5,     8,     0,
        1,     3,     1,     1,     1,     1,     3,     4,     1,     1,
        1,     3,     3,     0,     1,     3,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1
@@ -1383,127 +1383,127 @@ yyreduce:
     break;
 
   case 13:
-#line 80 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
-    { /* generate void function */ /*VariableList vl; $$ = new NFunctionDeclaration(*$1, *$2, vl, *$3);*/}
+#line 84 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+    {VariableList vl; NIdentifier type("void");(yyval.stmt) = new NFunctionPrototype(type, *(yyvsp[0].ident), vl);}
 #line 1389 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 81 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
-    { /* generate void function with args */ }
+#line 85 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+    {(yyval.stmt)=new NFunctionPrototype(*(yyvsp[0].ident),*(yyvsp[-5].ident),*(yyvsp[-3].varvec)); delete (yyvsp[-3].varvec);}
 #line 1395 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 82 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
-    {  VariableList vl; (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-1].ident), *(yyvsp[-3].ident), vl, *(yyvsp[0].block));}
+#line 89 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+    { VariableList vl; NIdentifier type("void"); (yyval.stmt) = new NFunctionDeclaration(type, *(yyvsp[-1].ident), vl, *(yyvsp[0].block)); }
 #line 1401 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 86 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
-    { VariableList vl; NIdentifier type("void");(yyval.stmt) = new NFunctionPrototype(type, *(yyvsp[0].ident), vl);}
+#line 90 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+    {NIdentifier type("void");(yyval.stmt) = new NFunctionDeclaration(type, *(yyvsp[-4].ident), *(yyvsp[-2].varvec), *(yyvsp[0].block));}
 #line 1407 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 87 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
-    { puts("Fnd f prototype");(yyval.stmt)=new NFunctionPrototype(*(yyvsp[0].ident),*(yyvsp[-5].ident),*(yyvsp[-3].varvec)); delete (yyvsp[-3].varvec);}
+#line 91 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+    {  VariableList vl; (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-1].ident), *(yyvsp[-3].ident), vl, *(yyvsp[0].block));}
 #line 1413 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 91 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
-    { puts("Found f declaration");(yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-1].ident), *(yyvsp[-6].ident), *(yyvsp[-4].varvec), *(yyvsp[0].block)); delete (yyvsp[-4].varvec); }
+#line 92 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+    { (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-1].ident), *(yyvsp[-6].ident), *(yyvsp[-4].varvec), *(yyvsp[0].block)); delete (yyvsp[-4].varvec); }
 #line 1419 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 94 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 95 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.varvec) = new VariableList(); }
 #line 1425 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 95 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 96 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.varvec) = new VariableList(); (yyval.varvec)->push_back((yyvsp[0].var_decl)); }
 #line 1431 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 96 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 97 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyvsp[-2].varvec)->push_back((yyvsp[0].var_decl)); }
 #line 1437 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 99 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 100 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.ident) = new NIdentifier(*(yyvsp[0].string)); delete (yyvsp[0].string); }
 #line 1443 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 102 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 103 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NString(*(yyvsp[0].string)); delete (yyvsp[0].string); }
 #line 1449 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 104 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 105 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NInteger(atol((yyvsp[0].string)->c_str())); delete (yyvsp[0].string); }
 #line 1455 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 105 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 106 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NDouble(atof((yyvsp[0].string)->c_str())); delete (yyvsp[0].string); }
 #line 1461 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 108 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 109 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NAssignment(*(yyvsp[-2].ident), *(yyvsp[0].expr)); }
 #line 1467 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 109 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 110 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NMethodCall(*(yyvsp[-3].ident), *(yyvsp[-1].exprvec)); delete (yyvsp[-1].exprvec); }
 #line 1473 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 110 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 111 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.ident) = (yyvsp[0].ident); }
 #line 1479 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 113 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 114 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
 #line 1485 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 114 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 115 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
 #line 1491 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 117 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 118 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.exprvec) = new ExpressionList(); }
 #line 1497 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 118 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 119 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.exprvec) = new ExpressionList(); (yyval.exprvec)->push_back((yyvsp[0].expr)); }
 #line 1503 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 119 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
+#line 120 "/home/steve/Project/Inked/parser.y" /* yacc.c:1646  */
     { (yyvsp[-2].exprvec)->push_back((yyvsp[0].expr)); }
 #line 1509 "/home/steve/Project/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
@@ -1737,5 +1737,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 126 "/home/steve/Project/Inked/parser.y" /* yacc.c:1906  */
+#line 127 "/home/steve/Project/Inked/parser.y" /* yacc.c:1906  */
 

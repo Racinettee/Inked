@@ -50,11 +50,11 @@ Grammar
    10 var_decl: ident ident
    11         | ident ident TEQUAL expr
 
-   12 func_decl: TFCTNKW ident block
-   13          | TFCTNKW ident TLPAREN func_decl_args TRPAREN block
-   14          | TFCTNKW ident TASKW ident block
-   15          | TPROTOKW ident
-   16          | TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident
+   12 func_decl: TPROTOKW ident
+   13          | TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident
+   14          | TFCTNKW ident block
+   15          | TFCTNKW ident TLPAREN func_decl_args TRPAREN block
+   16          | TFCTNKW ident TASKW ident block
    17          | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block
 
    18 func_decl_args: %empty
@@ -110,13 +110,13 @@ TELSEKW (268)
 TENDKW (269) 7
 TEXITKW (270)
 TFORKW (271)
-TFCTNKW (272) 12 13 14 17
+TFCTNKW (272) 14 15 16 17
 TIFKW (273)
 TLONGKW (274)
 TUNLKW (275)
 TWHLKW (276)
-TASKW (277) 14 16 17
-TPROTOKW (278) 15 16
+TASKW (277) 13 16 17
+TPROTOKW (278) 12 13
 TQUOTE (279)
 TSQUOTE (280)
 TCEQ (281) 35
@@ -126,8 +126,8 @@ TCLE (284) 38
 TCGT (285) 39
 TCGE (286) 40
 TEQUAL (287) 11 25
-TLPAREN (288) 13 16 17 26 31
-TRPAREN (289) 13 16 17 26 31
+TLPAREN (288) 13 15 17 26 31
+TRPAREN (289) 13 15 17 26 31
 TLBRACE (290) 8 9
 TRBRACE (291) 8 9
 TCOMMA (292) 20 34
@@ -149,13 +149,13 @@ stmts (45)
 stmt (46)
     on left: 4 5 6, on right: 2 3
 block (47)
-    on left: 7 8 9, on right: 12 13 14 17
+    on left: 7 8 9, on right: 14 15 16 17
 var_decl (48)
     on left: 10 11, on right: 4 19 20
 func_decl (49)
     on left: 12 13 14 15 16 17, on right: 5
 func_decl_args (50)
-    on left: 18 19 20, on right: 13 16 17 20
+    on left: 18 19 20, on right: 13 15 17 20
 ident (51)
     on left: 21, on right: 10 11 12 13 14 15 16 17 25 26 27
 string_literal (52)
@@ -223,9 +223,9 @@ State 4
 
 State 5
 
-   12 func_decl: TFCTNKW . ident block
-   13          | TFCTNKW . ident TLPAREN func_decl_args TRPAREN block
-   14          | TFCTNKW . ident TASKW ident block
+   14 func_decl: TFCTNKW . ident block
+   15          | TFCTNKW . ident TLPAREN func_decl_args TRPAREN block
+   16          | TFCTNKW . ident TASKW ident block
    17          | TFCTNKW . ident TLPAREN func_decl_args TRPAREN TASKW ident block
 
     TIDENTIFIER  shift, and go to state 1
@@ -235,8 +235,8 @@ State 5
 
 State 6
 
-   15 func_decl: TPROTOKW . ident
-   16          | TPROTOKW . ident TLPAREN func_decl_args TRPAREN TASKW ident
+   12 func_decl: TPROTOKW . ident
+   13          | TPROTOKW . ident TLPAREN func_decl_args TRPAREN TASKW ident
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -367,9 +367,9 @@ State 16
 
 State 17
 
-   12 func_decl: TFCTNKW ident . block
-   13          | TFCTNKW ident . TLPAREN func_decl_args TRPAREN block
-   14          | TFCTNKW ident . TASKW ident block
+   14 func_decl: TFCTNKW ident . block
+   15          | TFCTNKW ident . TLPAREN func_decl_args TRPAREN block
+   16          | TFCTNKW ident . TASKW ident block
    17          | TFCTNKW ident . TLPAREN func_decl_args TRPAREN TASKW ident block
 
     TIDENTIFIER  shift, and go to state 1
@@ -395,13 +395,13 @@ State 17
 
 State 18
 
-   15 func_decl: TPROTOKW ident .
-   16          | TPROTOKW ident . TLPAREN func_decl_args TRPAREN TASKW ident
+   12 func_decl: TPROTOKW ident .
+   13          | TPROTOKW ident . TLPAREN func_decl_args TRPAREN TASKW ident
 
     TLPAREN  shift, and go to state 42
 
-    TLPAREN   [reduce using rule 15 (func_decl)]
-    $default  reduce using rule 15 (func_decl)
+    TLPAREN   [reduce using rule 12 (func_decl)]
+    $default  reduce using rule 12 (func_decl)
 
 
 State 19
@@ -584,7 +584,7 @@ State 36
 
 State 37
 
-   14 func_decl: TFCTNKW ident TASKW . ident block
+   16 func_decl: TFCTNKW ident TASKW . ident block
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -593,7 +593,7 @@ State 37
 
 State 38
 
-   13 func_decl: TFCTNKW ident TLPAREN . func_decl_args TRPAREN block
+   15 func_decl: TFCTNKW ident TLPAREN . func_decl_args TRPAREN block
    17          | TFCTNKW ident TLPAREN . func_decl_args TRPAREN TASKW ident block
    31 expr: TLPAREN . expr TRPAREN
 
@@ -662,14 +662,14 @@ State 40
 
 State 41
 
-   12 func_decl: TFCTNKW ident block .
+   14 func_decl: TFCTNKW ident block .
 
-    $default  reduce using rule 12 (func_decl)
+    $default  reduce using rule 14 (func_decl)
 
 
 State 42
 
-   16 func_decl: TPROTOKW ident TLPAREN . func_decl_args TRPAREN TASKW ident
+   13 func_decl: TPROTOKW ident TLPAREN . func_decl_args TRPAREN TASKW ident
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -797,7 +797,7 @@ State 48
 
 State 49
 
-   14 func_decl: TFCTNKW ident TASKW ident . block
+   16 func_decl: TFCTNKW ident TASKW ident . block
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -828,7 +828,7 @@ State 50
 
 State 51
 
-   13 func_decl: TFCTNKW ident TLPAREN func_decl_args . TRPAREN block
+   15 func_decl: TFCTNKW ident TLPAREN func_decl_args . TRPAREN block
    17          | TFCTNKW ident TLPAREN func_decl_args . TRPAREN TASKW ident block
    20 func_decl_args: func_decl_args . TCOMMA var_decl
 
@@ -875,7 +875,7 @@ State 54
 
 State 55
 
-   16 func_decl: TPROTOKW ident TLPAREN func_decl_args . TRPAREN TASKW ident
+   13 func_decl: TPROTOKW ident TLPAREN func_decl_args . TRPAREN TASKW ident
    20 func_decl_args: func_decl_args . TCOMMA var_decl
 
     TRPAREN  shift, and go to state 64
@@ -938,14 +938,14 @@ State 59
 
 State 60
 
-   14 func_decl: TFCTNKW ident TASKW ident block .
+   16 func_decl: TFCTNKW ident TASKW ident block .
 
-    $default  reduce using rule 14 (func_decl)
+    $default  reduce using rule 16 (func_decl)
 
 
 State 61
 
-   13 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN . block
+   15 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN . block
    17          | TFCTNKW ident TLPAREN func_decl_args TRPAREN . TASKW ident block
 
     TIDENTIFIER  shift, and go to state 1
@@ -988,7 +988,7 @@ State 63
 
 State 64
 
-   16 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN . TASKW ident
+   13 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN . TASKW ident
 
     TASKW  shift, and go to state 69
 
@@ -1025,9 +1025,9 @@ State 66
 
 State 67
 
-   13 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN block .
+   15 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN block .
 
-    $default  reduce using rule 13 (func_decl)
+    $default  reduce using rule 15 (func_decl)
 
 
 State 68
@@ -1039,7 +1039,7 @@ State 68
 
 State 69
 
-   16 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW . ident
+   13 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW . ident
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -1072,9 +1072,9 @@ State 70
 
 State 71
 
-   16 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident .
+   13 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident .
 
-    $default  reduce using rule 16 (func_decl)
+    $default  reduce using rule 13 (func_decl)
 
 
 State 72

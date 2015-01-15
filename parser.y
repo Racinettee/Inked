@@ -77,18 +77,19 @@ var_decl : ident ident { $$ = new NVariableDeclaration(*$1, *$2); }
        | ident ident TEQUAL expr { $$ = new NVariableDeclaration(*$1, *$2, $4); }
        ;
 
-func_decl : TFCTNKW ident block { /* generate void function */ /*VariableList vl; $$ = new NFunctionDeclaration(*$1, *$2, vl, *$3);*/}
-			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN block { /* generate void function with args */ }
-			 | TFCTNKW ident TASKW ident block {  VariableList vl; $$ = new NFunctionDeclaration(*$4, *$2, vl, *$5);}
+func_decl : 
 			 /************************
 			  *  Function prototype
 			  ***********************/
-			 | TPROTOKW ident { VariableList vl; NIdentifier type("void");$$ = new NFunctionPrototype(type, *$2, vl);}
-			 | TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident { puts("Fnd f prototype");$$=new NFunctionPrototype(*$7,*$2,*$4); delete $4;}
-			 /****************************
+			   TPROTOKW ident {VariableList vl; NIdentifier type("void");$$ = new NFunctionPrototype(type, *$2, vl);}
+			 | TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident {$$=new NFunctionPrototype(*$7,*$2,*$4); delete $4;}
+			 /**************************
 			  * Function definitions
-			  ***************************/
-			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block { puts("Found f declaration");$$ = new NFunctionDeclaration(*$7, *$2, *$4, *$8); delete $4; }
+			  *************************/
+			 | TFCTNKW ident block { VariableList vl; NIdentifier type("void"); $$ = new NFunctionDeclaration(type, *$2, vl, *$3); }
+			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN block {NIdentifier type("void");$$ = new NFunctionDeclaration(type, *$2, *$4, *$6);}
+			 | TFCTNKW ident TASKW ident block {  VariableList vl; $$ = new NFunctionDeclaration(*$4, *$2, vl, *$5);}
+			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block { $$ = new NFunctionDeclaration(*$7, *$2, *$4, *$8); delete $4; }
 		    ;
 
 func_decl_args : /*blank*/  { $$ = new VariableList(); }

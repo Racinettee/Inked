@@ -1,11 +1,25 @@
-
-
+#include <llvm/IR/ValueSymbolTable.h>
 #include "node.h"
 #include "codegen.h"
 #include "parser.parser.hh"
 
 using namespace std;
 using namespace llvm;
+
+void CompilerEngine::StartGen()
+{
+  vector<Type*> argTypes;
+	FunctionType* ftype =
+    FunctionType::get(
+      Type::getVoidTy(getGlobalContext()),
+      argTypes,
+      false
+    );
+  mainFunction = Function::Create(ftype, GlobalValue::InternalLinkage, "main", module);
+	BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", mainFunction, 0);
+	puts("Main function created. Generating code...");
+	this->PushBlock(bblock);
+}
 
 /* Compile the AST into a module */
 void CodeGenContext::generateCode(NBlock& root)
@@ -17,7 +31,6 @@ void CodeGenContext::generateCode(NBlock& root)
       argTypes,
       false
     );
-
   mainFunction = Function::Create(ftype, GlobalValue::InternalLinkage, "main", module);
 	BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", mainFunction, 0);
 	builder.SetInsertPoint(bblock);
@@ -36,8 +49,8 @@ void CodeGenContext::generateCode(NBlock& root)
 	 */
 	puts("generated");
 	PassManager pm;
-	pm.add(createPrintModulePass(&outs()));
-	//module->dump();
+	//pm.add(createPrintModulePass(&outs()));
+	module->dump();
 	pm.run(*module);
 }
 
@@ -102,12 +115,23 @@ Value* NString::codeGen(CodeGenContext& context)
 
 Value* NIdentifier::codeGen(CodeGenContext& context)
 {
+  context.module->dump();
 	std::cout << "Creating identifier reference: " << name << std::endl;
-	if (context.locals().find(name) == context.locals().end()) {
-		std::cerr << "undeclared variable " << name << std::endl;
-		return nullptr;
-	}
-	return new LoadInst(context.locals()[name], "", false, context.currentBlock());
+  auto current_block = context.currentBlock();
+	auto sym_table = current_block->getValueSymbolTable();
+	auto val = sym_table->lookup(name);
+
+  if(val == nullptr){
+    std::cerr << "undeclared variable " << name << std::endl;
+    return NULL;
+  }
+//	if (context.locals().find(name) == context.locals().end()) {
+//		std::cerr << "undeclared variable " << name << std::endl;
+//		return nullptr;
+//	}
+  context.module->dump();
+  return new LoadInst(val, "", current_block);
+	//return new LoadInst(context.locals()[name], "", true, current_block);
 }
 
 Value* NMethodCall::codeGen(CodeGenContext& context)
@@ -152,10 +176,19 @@ math:
 Value* NAssignment::codeGen(CodeGenContext& context)
 {
 	std::cout << "Creating assignment for " << lhs.name << std::endl;
-	if (context.locals().find(lhs.name) == context.locals().end()) {
-		std::cerr << "undeclared variable " << lhs.name << std::endl;
-		return NULL;
-	}
+	//if (context.locals().find(lhs.name) == context.locals().end()) {
+	auto current_block = context.currentBlock();
+	auto sym_table = current_block->getValueSymbolTable();
+	auto val = sym_table->lookup(lhs.name);
+	if(val == nullptr){
+    auto paren = current_block->getParent();
+    sym_table = &paren->getValueSymbolTable();
+    val = sym_table->lookup(lhs.name);
+  }
+  if(val == nullptr){
+    std::cerr << "undeclared variable " << lhs.name << std::endl;
+    return NULL;
+  }
 	return new StoreInst(rhs.codeGen(context), context.locals()[lhs.name], false, context.currentBlock());
 }
 
@@ -219,11 +252,22 @@ Value* NFunctionDeclaration::codeGen(CodeGenContext& context)
 	Function *function = Function::Create(ftype, GlobalValue::InternalLinkage, id.name.c_str(), context.module);
 	BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", function, 0);
 
+	int ctr = 0;
+	for(auto itr = function->arg_begin(); itr != function->arg_end(); itr++)
+  {
+    itr->setName(arguments[ctr]->id.name);
+    ctr++;
+  }
+
+  context.module->dump();
+
 	context.pushBlock(bblock);
 
-	for (it = arguments.begin(); it != arguments.end(); it++) {
-		(**it).codeGen(context);
-	}
+	// This appears to cause allocation of the parameter types? as well as creating
+	// additional copys of the parameter with different names
+	//for (it = arguments.begin(); it != arguments.end(); it++) {
+	//	(**it).codeGen(context);
+	//}
 
 	block.codeGen(context);
 	ReturnInst::Create(getGlobalContext(), bblock);
