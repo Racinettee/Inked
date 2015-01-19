@@ -4,7 +4,7 @@
 #include <vector>
 #include <llvm/IR/Value.h>
 
-class CodeGenContext;
+class ICompilerEngine;
 class NStatement;
 class NExpression;
 class NVariableDeclaration;
@@ -17,7 +17,7 @@ class Node {
 public:
   Node(){ }
   virtual ~Node() {}
-  virtual llvm::Value* codeGen(CodeGenContext& context) { return nullptr; }
+  virtual llvm::Value* codeGen(ICompilerEngine* context) { return nullptr; }
 };
 
 class NExpression : public Node {
@@ -30,28 +30,28 @@ class NInteger : public NExpression {
 public:
   long long value;
   NInteger(long long value) : value(value) { }
-  virtual llvm::Value* codeGen(CodeGenContext& context);
+  virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NDouble : public NExpression {
 public:
   double value;
   NDouble(double value) : value(value) { }
-  virtual llvm::Value* codeGen(CodeGenContext& context);
+  virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NString : public NExpression {
 public:
 	std::string value;
 	NString(const std::string& value):value(value) { }
-	virtual llvm::Value* codeGen(CodeGenContext& context);
+	virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NIdentifier : public NExpression {
 public:
     std::string name;
     NIdentifier(const std::string& name) : name(name) { }
-    virtual llvm::Value* codeGen(CodeGenContext& context);
+    virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NMethodCall : public NExpression {
@@ -61,7 +61,7 @@ public:
     NMethodCall(const NIdentifier& id, ExpressionList& arguments) :
         id(id), arguments(arguments) { }
     NMethodCall(const NIdentifier& id) : id(id) { }
-    virtual llvm::Value* codeGen(CodeGenContext& context);
+    virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NBinaryOperator : public NExpression {
@@ -71,7 +71,7 @@ public:
     NExpression& rhs;
     NBinaryOperator(NExpression& lhs, int op, NExpression& rhs) :
         lhs(lhs), rhs(rhs), op(op) { }
-    virtual llvm::Value* codeGen(CodeGenContext& context);
+    virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NAssignment : public NExpression {
@@ -80,13 +80,13 @@ public:
   NExpression& rhs;
   NAssignment(NIdentifier& lhs, NExpression& rhs) :
         lhs(lhs), rhs(rhs) { }
-  virtual llvm::Value* codeGen(CodeGenContext& context);
+  virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NBlock : public NExpression {
 public:
   StatementList statements;
-  virtual llvm::Value* codeGen(CodeGenContext& context);
+  virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NExpressionStatement : public NStatement {
@@ -94,7 +94,7 @@ public:
   NExpression& expression;
   NExpressionStatement(NExpression& expression) :
       expression(expression) { }
-  virtual llvm::Value* codeGen(CodeGenContext& context);
+  virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NVariableDeclaration : public NStatement {
@@ -106,7 +106,7 @@ public:
       type(type), id(id) { }
   NVariableDeclaration(const NIdentifier& type, NIdentifier& id, NExpression *assignmentExpr) :
       type(type), id(id), assignmentExpr(assignmentExpr) { }
-  virtual llvm::Value* codeGen(CodeGenContext& context);
+  virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 // NVariableReference stores an llvm value ptr to directly reference a variable
@@ -117,7 +117,7 @@ public:
 
   NVariableReference(const NIdentifier& name, llvm::Value* value):name(name), value(value){ }
 
-  virtual llvm::Value* codeGen(CodeGenContext& ctx);
+  virtual llvm::Value* codeGen(ICompilerEngine* ctx);
 };
 
 class NFunctionPrototype : public NStatement {
@@ -127,7 +127,7 @@ public:
   VariableList arguments;
   NFunctionPrototype(const NIdentifier& type, const NIdentifier& id, const VariableList& arguments):
     type(type), id(id), arguments(arguments) { }
-  virtual llvm::Value* codeGen(CodeGenContext& context);
+  virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NFunctionDeclaration : public NFunctionPrototype {
@@ -136,5 +136,5 @@ public:
   NFunctionDeclaration(const NIdentifier& type, const NIdentifier& id,
           const VariableList& arguments, NBlock& block) :
     NFunctionPrototype(type, id, arguments), block(block) { }
-  virtual llvm::Value* codeGen(CodeGenContext& context);
+  virtual llvm::Value* codeGen(ICompilerEngine* context);
 };

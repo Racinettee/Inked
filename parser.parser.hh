@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_HOME_STEVE_PROJECT_INKED_PARSER_PARSER_HH_INCLUDED
-# define YY_YY_HOME_STEVE_PROJECT_INKED_PARSER_PARSER_HH_INCLUDED
+#ifndef YY_YY_HOME_STEVE_DOCUMENTS_INKED_PARSER_PARSER_HH_INCLUDED
+# define YY_YY_HOME_STEVE_DOCUMENTS_INKED_PARSER_PARSER_HH_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -93,7 +93,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 11 "/home/steve/Project/Inked/parser.y" /* yacc.c:1909  */
+#line 11 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1909  */
 
   Node *node;
   NBlock *block;
@@ -106,7 +106,7 @@ union YYSTYPE
   std::string *string;
   int token;
 
-#line 110 "/home/steve/Project/Inked/parser.parser.hh" /* yacc.c:1909  */
+#line 110 "/home/steve/Documents/Inked/parser.parser.hh" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -117,4 +117,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_STEVE_PROJECT_INKED_PARSER_PARSER_HH_INCLUDED  */
+#endif /* !YY_YY_HOME_STEVE_DOCUMENTS_INKED_PARSER_PARSER_HH_INCLUDED  */

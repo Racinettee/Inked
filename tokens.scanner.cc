@@ -1,6 +1,6 @@
-#line 2 "/home/steve/Project/Inked/tokens.scanner.cc"
+#line 2 "/home/steve/Documents/Inked/tokens.scanner.cc"
 
-#line 4 "/home/steve/Project/Inked/tokens.scanner.cc"
+#line 4 "/home/steve/Documents/Inked/tokens.scanner.cc"
 
 #define  YY_INT_ALIGNED short int
 
@@ -523,17 +523,16 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "/home/steve/Project/Inked/tokens.l"
-#line 2 "/home/steve/Project/Inked/tokens.l"
+#line 1 "/home/steve/Documents/Inked/tokens.l"
+#line 2 "/home/steve/Documents/Inked/tokens.l"
 #include <string>
 #include "node.h"
-//#include "parser.hpp"
 #include "parser.parser.hh"
 #define SAVE_TOKEN yylval.string = new std::string(yytext, yyleng)
 #define TOKEN(t) (yylval.token = t)
 extern "C" int yywrap() { puts("yywraped"); return 1; }
 extern unsigned long long linecount;
-#line 537 "/home/steve/Project/Inked/tokens.scanner.cc"
+#line 536 "/home/steve/Documents/Inked/tokens.scanner.cc"
 
 #define INITIAL 0
 
@@ -720,10 +719,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 12 "/home/steve/Project/Inked/tokens.l"
+#line 11 "/home/steve/Documents/Inked/tokens.l"
 
 
-#line 727 "/home/steve/Project/Inked/tokens.scanner.cc"
+#line 726 "/home/steve/Documents/Inked/tokens.scanner.cc"
 
 	if ( !(yy_init) )
 		{
@@ -808,216 +807,216 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 14 "/home/steve/Project/Inked/tokens.l"
+#line 13 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TASKW);
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 15 "/home/steve/Project/Inked/tokens.l"
+#line 14 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TBREAKKW);
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 16 "/home/steve/Project/Inked/tokens.l"
+#line 15 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCONSTKW);
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "/home/steve/Project/Inked/tokens.l"
+#line 16 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCLSKW);
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 18 "/home/steve/Project/Inked/tokens.l"
+#line 17 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCONTKW);
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 19 "/home/steve/Project/Inked/tokens.l"
+#line 18 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TDOKW);
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 20 "/home/steve/Project/Inked/tokens.l"
+#line 19 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TELSEKW);
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 21 "/home/steve/Project/Inked/tokens.l"
+#line 20 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TENDKW);
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 22 "/home/steve/Project/Inked/tokens.l"
+#line 21 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TEXITKW);
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 23 "/home/steve/Project/Inked/tokens.l"
+#line 22 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TFORKW);
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 24 "/home/steve/Project/Inked/tokens.l"
+#line 23 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TFCTNKW);
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 25 "/home/steve/Project/Inked/tokens.l"
+#line 24 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TIFKW);
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 26 "/home/steve/Project/Inked/tokens.l"
+#line 25 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TPROTOKW);
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 27 "/home/steve/Project/Inked/tokens.l"
+#line 26 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TUNLKW);
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 28 "/home/steve/Project/Inked/tokens.l"
+#line 27 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TWHLKW);
 	YY_BREAK
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 30 "/home/steve/Project/Inked/tokens.l"
+#line 29 "/home/steve/Documents/Inked/tokens.l"
 {puts("got string literal");SAVE_TOKEN;return  TSLITERAL;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 32 "/home/steve/Project/Inked/tokens.l"
+#line 31 "/home/steve/Documents/Inked/tokens.l"
 ;
 	YY_BREAK
 case 18:
 /* rule 18 can match eol */
 YY_RULE_SETUP
-#line 33 "/home/steve/Project/Inked/tokens.l"
+#line 32 "/home/steve/Documents/Inked/tokens.l"
 ++linecount;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 34 "/home/steve/Project/Inked/tokens.l"
+#line 33 "/home/steve/Documents/Inked/tokens.l"
 SAVE_TOKEN; return TIDENTIFIER;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 35 "/home/steve/Project/Inked/tokens.l"
+#line 34 "/home/steve/Documents/Inked/tokens.l"
 SAVE_TOKEN; return TDOUBLE;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 36 "/home/steve/Project/Inked/tokens.l"
+#line 35 "/home/steve/Documents/Inked/tokens.l"
 SAVE_TOKEN; return TINTEGER;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 37 "/home/steve/Project/Inked/tokens.l"
+#line 36 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TEQUAL);
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 38 "/home/steve/Project/Inked/tokens.l"
+#line 37 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCEQ);
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 39 "/home/steve/Project/Inked/tokens.l"
+#line 38 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCNE);
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 40 "/home/steve/Project/Inked/tokens.l"
+#line 39 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCLT);
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 41 "/home/steve/Project/Inked/tokens.l"
+#line 40 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCLE);
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 42 "/home/steve/Project/Inked/tokens.l"
+#line 41 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCGT);
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 43 "/home/steve/Project/Inked/tokens.l"
+#line 42 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCGE);
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 44 "/home/steve/Project/Inked/tokens.l"
+#line 43 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TLPAREN);
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 45 "/home/steve/Project/Inked/tokens.l"
+#line 44 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TRPAREN);
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 46 "/home/steve/Project/Inked/tokens.l"
+#line 45 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TLBRACE);
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 47 "/home/steve/Project/Inked/tokens.l"
+#line 46 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TRBRACE);
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 48 "/home/steve/Project/Inked/tokens.l"
+#line 47 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TDOT);
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 49 "/home/steve/Project/Inked/tokens.l"
+#line 48 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TCOMMA);
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 50 "/home/steve/Project/Inked/tokens.l"
+#line 49 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TPLUS);
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 51 "/home/steve/Project/Inked/tokens.l"
+#line 50 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TMINUS);
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 52 "/home/steve/Project/Inked/tokens.l"
+#line 51 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TMUL);
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 53 "/home/steve/Project/Inked/tokens.l"
+#line 52 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TDIV);
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 54 "/home/steve/Project/Inked/tokens.l"
+#line 53 "/home/steve/Documents/Inked/tokens.l"
 return TOKEN(TQUOTE);
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 55 "/home/steve/Project/Inked/tokens.l"
+#line 54 "/home/steve/Documents/Inked/tokens.l"
 printf("Unknown token!\n"); yyterminate();
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 56 "/home/steve/Project/Inked/tokens.l"
+#line 55 "/home/steve/Documents/Inked/tokens.l"
 yyterminate();
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 57 "/home/steve/Project/Inked/tokens.l"
+#line 56 "/home/steve/Documents/Inked/tokens.l"
 ECHO;
 	YY_BREAK
-#line 1021 "/home/steve/Project/Inked/tokens.scanner.cc"
+#line 1020 "/home/steve/Documents/Inked/tokens.scanner.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2013,7 +2012,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 57 "/home/steve/Project/Inked/tokens.l"
+#line 56 "/home/steve/Documents/Inked/tokens.l"
 
 
 

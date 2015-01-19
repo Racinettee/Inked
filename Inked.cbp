@@ -37,8 +37,10 @@
 		<Linker>
 			<Add option="`llvm-config --libs  jit native core --ldflags`" />
 		</Linker>
+		<Unit filename="CompilerEngine.cpp" />
+		<Unit filename="CompilerEngine.hpp" />
+		<Unit filename="ICompilerEngine.hpp" />
 		<Unit filename="codegen.cpp" />
-		<Unit filename="codegen.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="node.h" />
 		<Unit filename="parser.y">
