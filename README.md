@@ -9,19 +9,22 @@ modified for llvm 3
 
 the syntax looks a little like ruby with some inspiration from c
 
-an example:
+Here is a current working example:<br>
 
 proto puts(cstring str) as int<br>
 proto gets(cstring str) as cstring<br>
-<br>
-function greet() as long<br>
-	puts("hello")<br>
-	puts("Friend")<br>
-	cstring inp = gets("               ")<br>
-	puts("You entered:")<br>
-	puts(inp)<br>
+proto printf(cstring str) as int<br>
+
+function greet<br>
+	long ey = 4	<br>
+	printf("Hey %i %i %i %i", 1,2,3, ey)<br>
 end<br>
-<br>
+
 greet()<br>
 greet()<br>
-greet()
+greet()<br>
+puts("")<br>
+printf("Enter something... : ) ")<br>
+cstring inp = gets("          ")<br>
+puts("")<br>
+printf("You entered: %s", inp)<br>

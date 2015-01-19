@@ -10,3 +10,9 @@ end
 greet()
 greet()
 greet()
+puts("")
+printf("Enter something... : ) ")
+cstring inp = gets("          ")
+puts("")
+printf("You entered: %s", inp)
+
