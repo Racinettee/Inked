@@ -24,7 +24,7 @@ greet()<br>
 greet()<br>
 greet()<br>
 puts("")<br>
-printf("Enter something... : ) ")<br>
-cstring inp = gets("          ")<br>
+printf("Enter something under 8 characters... : ) ")<br>
+cstring inp = gets("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")<br>
 puts("")<br>
 printf("You entered: %s", inp)<br>
