@@ -12,16 +12,16 @@ static Type* typeOf(const NIdentifier& type)
   if (type.name == "void") {
     return Type::getVoidTy(getGlobalContext());
   }
-	else if (type.name.compare("int") == 0) {
+	else if (type.name == "int") {
 		return Type::getInt32Ty(getGlobalContext());
 	}
-	else if (type.name.compare("long") == 0) {
+	else if (type.name == "long") {
     return Type::getInt64Ty(getGlobalContext());
 	}
-	else if (type.name.compare("double") == 0) {
+	else if (type.name == "double") {
 		return Type::getDoubleTy(getGlobalContext());
 	}
-	else if (type.name.compare("cstring") == 0) {
+	else if (type.name == "cstring") {
     return Type::getInt8PtrTy(getGlobalContext());
 	}
 	cout << "Warning: Type of '" << type.name << "' unrecognized\n";
@@ -45,7 +45,6 @@ Value* NDouble::codeGen(ICompilerEngine* context)
 Value* NString::codeGen(ICompilerEngine* context)
 {
 	std::cout << "Creating string: " << value << std::endl;
-
 	return context->builder.CreateGlobalStringPtr(value);
 }
 
@@ -77,7 +76,6 @@ Value* NMethodCall::codeGen(ICompilerEngine* context)
 	for (it = arguments.begin(); it != arguments.end(); it++) {
 		args.push_back((**it).codeGen(context));
 	}
-	//CallInst *call = CallInst::Create(function, args.begin(), args.end(), "", context.currentBlock());
 	CallInst *call = CallInst::Create(function, args, "", context->CurrentBBlock());
 	std::cout << "Creating method call: " << id.name << std::endl;
 	return call;
@@ -105,7 +103,6 @@ math:
 Value* NAssignment::codeGen(ICompilerEngine* context)
 {
 	std::cout << "Creating assignment for " << lhs.name << std::endl;
-	//if (context.locals().find(lhs.name) == context.locals().end()) {
 	auto current_block = context->CurrentBBlock();
 	auto sym_table = current_block->getValueSymbolTable();
 	auto val = sym_table->lookup(lhs.name);
@@ -118,9 +115,8 @@ Value* NAssignment::codeGen(ICompilerEngine* context)
     std::cerr << "undeclared variable " << lhs.name << std::endl;
     return NULL;
   }
-  //return context->builder.CreateStore(val, lhs.name);
 	return new StoreInst(rhs.codeGen(context),
-    /*context.locals()[lhs.name]*/context->CurrentValSymTable()->lookup(lhs.name), false, context->CurrentBBlock());
+      context->CurrentValSymTable()->lookup(lhs.name), false, context->CurrentBBlock());
 }
 
 Value* NBlock::codeGen(ICompilerEngine* context)
@@ -145,7 +141,6 @@ Value* NVariableDeclaration::codeGen(ICompilerEngine* context)
 {
 	std::cout << "Creating variable declaration " << type.name << " " << id.name << std::endl;
 	AllocaInst *alloc = new AllocaInst(typeOf(type), id.name.c_str(), context->CurrentBBlock());
-	//context.locals()[id.name] = alloc;
 
 	if (assignmentExpr != NULL) {
 		NAssignment assn(id, *assignmentExpr);

@@ -43,7 +43,7 @@ public:
 class NString : public NExpression {
 public:
 	std::string value;
-	NString(const std::string& value):value(value) { }
+	NString(const std::string& v):value(v.substr(1, v.size()-2)) { }
 	virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 

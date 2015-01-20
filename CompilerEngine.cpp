@@ -74,22 +74,6 @@ void CompilerEngine::StartGen(NBlock* root)
 	this->PopBlock();
 
 	main_module->dump();
-
-	//PassManager pm;
-	//pm.run(*main_module);
-//	EngineBuilder builder(main_module);
-//	std::string error_str;
-//  builder.setErrorStr(&error_str);
-//  try {
-//    auto Jit = builder.create();
-//    void* ptrInit = Jit->getPointerToFunction(main_function);
-//    puts("running main function");
-//    ((void(*)())ptrInit)();
-//  }
-//  catch(...)
-//  {
-//    cout << error_str << endl;
-//  }
 }
 /* Executes the AST by running the main function */
 GenericValue CompilerEngine::Test() {
