@@ -8,8 +8,6 @@ function greet
 end
 
 greet()
-greet()
-greet()
 puts("")
 printf("Enter something... : ) ")
 cstring inp = gets("          ")

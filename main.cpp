@@ -24,12 +24,10 @@ int main(int argc, char** argv)
 	puts("parsed");
 	cout << programBlock << std::endl;
 
-	//CodeGenContext context;
-	//context.generateCode(*programBlock);
-	//context.runCode();
-	CompilerEngine* cengine = new CompilerEngine();
+	using CompEngine = std::unique_ptr<CompilerEngine>;
+
+	CompEngine cengine(new CompilerEngine());
 	cengine->StartGen(programBlock);
 	cengine->Test();
-	delete cengine;
 	return 0;
 }

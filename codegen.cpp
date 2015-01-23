@@ -6,7 +6,6 @@ using namespace std;
 using namespace llvm;
 
 /* Returns an LLVM type based on the identifier */
-//static const Type *typeOf(const NIdentifier& type)
 static Type* typeOf(const NIdentifier& type)
 {
   if (type.name == "void") {
@@ -181,8 +180,6 @@ Value* NFunctionDeclaration::codeGen(ICompilerEngine* context)
     itr->setName(arguments[ctr]->id.name);
     ctr++;
   }
-
-  context->CurrentModule()->dump();
 
 	context->PushBlock(bblock);
 

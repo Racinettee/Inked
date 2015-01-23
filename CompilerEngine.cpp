@@ -4,7 +4,7 @@
 
 using namespace std;
 using namespace llvm;
-
+// -------------------------------
 CompilerEngine* CompilerEngine::inst;
 
 CompilerEngine::CompilerEngine():

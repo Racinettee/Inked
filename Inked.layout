@@ -2,24 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="codegen.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1102" topLine="20" />
-		</Cursor>
-	</File>
-	<File name="tokens.scanner.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="50139" topLine="1863" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="220" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="tokens.l" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="482" topLine="0" />
+			<Cursor1 position="550" topLine="12" />
 		</Cursor>
 	</File>
 	<File name="node.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -27,15 +12,25 @@
 			<Cursor1 position="2139" topLine="76" />
 		</Cursor>
 	</File>
-	<File name="codegen.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tokens.scanner.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="587" topLine="48" />
+			<Cursor1 position="50139" topLine="1863" />
 		</Cursor>
 	</File>
-	<File name="parser.y" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="parser.y" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="3178" topLine="84" />
 		</Cursor>
 	</File>
-	<EditorTabsLayout layout="05e5fd1054b60416018ecebd00000002=*0;Inked:codegen.cpp,1;Inked:node.h,2;Inked:codegen.h,3;Inked:parser.y@layout2|name=dummy;caption=;state=2098174;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=579;besth=117;minw=579;minh=117;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=05e5fd1054b60416018ecebd00000002;caption=;state=2098172;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|" />
+	<File name="tokens.l" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="482" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="codegen.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="966" topLine="25" />
+		</Cursor>
+	</File>
+	<EditorTabsLayout layout="05b8942054bff0a9010b2a7800000002=0;Inked:codegen.cpp,1;Inked:node.h,2;Inked:parser.y,*3;Inked:main.cpp@layout2|name=dummy;caption=;state=2098174;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=578;besth=208;minw=578;minh=208;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=05b8942054bff0a9010b2a7800000002;caption=;state=2098172;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|" />
 </CodeBlocks_layout_file>
