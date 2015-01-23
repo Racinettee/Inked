@@ -29,21 +29,30 @@ static Type* typeOf(const NIdentifier& type)
 
 /* -- Code Generation -- */
 
+Value* NClass::codeGen(ICompilerEngine* ctxt)
+{
+  printf("Class def node!!! %s\n", name.c_str());
+  vector<Type*> elements({Type::getInt32Ty(getGlobalContext()), Type::getInt64Ty(getGlobalContext())});
+  auto str = StructType::create(getGlobalContext(), elements,name);
+  ctxt->type_table[name] = str;
+  return nullptr;//return ctxt->CurrentModule()->getOrInsertGlobal (name, str);
+}
+
 Value* NInteger::codeGen(ICompilerEngine* context)
 {
-	std::cout << "Creating integer: " << value << std::endl;
+	//std::cout << "Creating integer: " << value << std::endl;
 	return ConstantInt::get(Type::getInt64Ty(getGlobalContext()), value, true);
 }
 
 Value* NDouble::codeGen(ICompilerEngine* context)
 {
-	std::cout << "Creating double: " << value << std::endl;
+	//std::cout << "Creating double: " << value << std::endl;
 	return ConstantFP::get(Type::getDoubleTy(getGlobalContext()), value);
 }
 
 Value* NString::codeGen(ICompilerEngine* context)
 {
-	std::cout << "Creating string: " << value << std::endl;
+	//std::cout << "Creating string: " << value << std::endl;
 	return context->builder.CreateGlobalStringPtr(value);
 }
 
@@ -64,8 +73,8 @@ Value* NIdentifier::codeGen(ICompilerEngine* context)
 Value* NMethodCall::codeGen(ICompilerEngine* context)
 {
 	Function *function = context->CurrentModule()->getFunction(id.name.c_str());
-	std::cout << "Creating call to function: " << id.name.c_str() <<
-	  function << std::endl;
+	//std::cout << "Creating call to function: " << id.name.c_str() <<
+	//  function << std::endl;
 
 	if (function == NULL) {
 		std::cerr << "no such function " << id.name << std::endl;
@@ -76,7 +85,7 @@ Value* NMethodCall::codeGen(ICompilerEngine* context)
 		args.push_back((**it).codeGen(context));
 	}
 	CallInst *call = CallInst::Create(function, args, "", context->CurrentBBlock());
-	std::cout << "Creating method call: " << id.name << std::endl;
+	//std::cout << "Creating method call: " << id.name << std::endl;
 	return call;
 }
 
@@ -101,7 +110,7 @@ math:
 
 Value* NAssignment::codeGen(ICompilerEngine* context)
 {
-	std::cout << "Creating assignment for " << lhs.name << std::endl;
+	//std::cout << "Creating assignment for " << lhs.name << std::endl;
 	auto current_block = context->CurrentBBlock();
 	auto sym_table = current_block->getValueSymbolTable();
 	auto val = sym_table->lookup(lhs.name);
@@ -133,7 +142,7 @@ Value* NBlock::codeGen(ICompilerEngine* context)
 Value* NExpressionStatement::codeGen(ICompilerEngine* context)
 {
 	std::cout << "Generating code for " << typeid(expression).name() << std::endl;
-	return expression.codeGen(context);
+	return expression->codeGen(context);
 }
 
 Value* NVariableDeclaration::codeGen(ICompilerEngine* context)
@@ -150,7 +159,7 @@ Value* NVariableDeclaration::codeGen(ICompilerEngine* context)
 
 Value* NFunctionPrototype::codeGen(ICompilerEngine* ctx)
 {
-  puts("Creating function prototype");
+  //puts("Creating function prototype");
   vector<Type*> argTypes;
 	VariableList::const_iterator it;
 	for (it = arguments.begin(); it != arguments.end(); it++) {
@@ -193,6 +202,6 @@ Value* NFunctionDeclaration::codeGen(ICompilerEngine* context)
 	ReturnInst::Create(getGlobalContext(), bblock);
 
 	context->PopBlock();
-	std::cout << "Creating function: " << id.name << std::endl;
+	//std::cout << "Creating function: " << id.name << std::endl;
 	return function;
 }

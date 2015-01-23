@@ -23,35 +23,44 @@ public:
 class NExpression : public Node {
 };
 
-class NStatement : public Node {
+class NStatement : public NExpression {
+};
+class NBlock;
+
+class NClass : public NStatement {
+public:
+  NBlock* block;
+  std::string name;
+  NClass(const std::string& n, NBlock* b):name(n), block(b) { }
+  virtual llvm::Value* codeGen(ICompilerEngine*);
 };
 
 class NInteger : public NExpression {
 public:
   long long value;
   NInteger(long long value) : value(value) { }
-  virtual llvm::Value* codeGen(ICompilerEngine* context);
+  virtual llvm::Value* codeGen(ICompilerEngine*);
 };
 
 class NDouble : public NExpression {
 public:
   double value;
   NDouble(double value) : value(value) { }
-  virtual llvm::Value* codeGen(ICompilerEngine* context);
+  virtual llvm::Value* codeGen(ICompilerEngine*);
 };
 
 class NString : public NExpression {
 public:
 	std::string value;
 	NString(const std::string& v):value(v.substr(1, v.size()-2)) { }
-	virtual llvm::Value* codeGen(ICompilerEngine* context);
+	virtual llvm::Value* codeGen(ICompilerEngine*);
 };
 
 class NIdentifier : public NExpression {
 public:
     std::string name;
     NIdentifier(const std::string& name) : name(name) { }
-    virtual llvm::Value* codeGen(ICompilerEngine* context);
+    virtual llvm::Value* codeGen(ICompilerEngine*);
 };
 
 class NMethodCall : public NExpression {
@@ -91,8 +100,9 @@ public:
 
 class NExpressionStatement : public NStatement {
 public:
-  NExpression& expression;
-  NExpressionStatement(NExpression& expression) :
+  //NExpression& expression;
+  Node* expression;
+  NExpressionStatement(Node* expression)://NExpression& expression) :
       expression(expression) { }
   virtual llvm::Value* codeGen(ICompilerEngine* context);
 };

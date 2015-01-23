@@ -13,3 +13,7 @@ printf("Enter something... : ) ")
 cstring inp = gets("          ")
 puts("")
 printf("You entered: %s", inp)
+
+class heythere
+	long heyboy
+end

@@ -13,6 +13,22 @@ CompilerEngine::CompilerEngine():
 {
   if(inst!=nullptr)
     throw;
+  type_table["void"] = Type::getVoidTy(getGlobalContext());
+  type_table["int"] = Type::getInt32Ty(getGlobalContext());
+  type_table["long"]= Type::getInt64Ty(getGlobalContext());
+  type_table["double"]=Type::getDoubleTy(getGlobalContext());
+  type_table["float"] =Type::getFloatTy(getGlobalContext());
+  type_table["cstring"]=Type::getInt8PtrTy(getGlobalContext());
+  puts("Basic types registered");
+}
+/* Returns an LLVM type based on the identifier */
+Type* CompilerEngine::TypeOf(const std::string& type)
+{
+	if(type_table.find(type) != type_table.end()) {
+    return type_table[type];
+	}
+	cout << "Warning: Type of '" << type << "' unrecognized\n";
+	return Type::getVoidTy(getGlobalContext());
 }
 Function* CompilerEngine::CurrentFunction()
 {

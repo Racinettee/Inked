@@ -18,6 +18,8 @@
 #include <llvm/Support/raw_ostream.h>
 #include <llvm/IR/ValueSymbolTable.h>
 using namespace llvm;
+#include <map>
+#include <string>
 
 class NBlock;
 
@@ -26,8 +28,13 @@ public:
   // The builder is here cause it is one of those things
   // that will probably persist in any offshoot implementation
   IRBuilder<> builder;
+  std::map<std::string, Type*> type_table;
 public:
   ICompilerEngine(LLVMContext& ctx): builder(ctx) { }
+
+  // An implementing class will determine what built in types exist,
+  // as well as how to find user types etc by implementing this function
+  virtual Type*             TypeOf(const std::string&) = 0;
 
   virtual Function*         CurrentFunction() = 0;
   virtual BasicBlock*       CurrentBBlock () = 0;

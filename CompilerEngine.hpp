@@ -16,6 +16,8 @@ public:
   static CompilerEngine* inst;
   CompilerEngine();
 
+  Type*             TypeOf(const std::string&);
+
   Function*         CurrentFunction();
   BasicBlock*       CurrentBBlock();
   Module*           CurrentModule();

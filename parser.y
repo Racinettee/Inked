@@ -15,6 +15,7 @@ void yyerror(const char *s) { printf("error at line: %llu %s\n", linecount, s); 
   NStatement *stmt;
   NIdentifier *ident;
   NVariableDeclaration *var_decl;
+  NClass* nclass;
   std::vector<NVariableDeclaration*> *varvec;
   std::vector<NExpression*> *exprvec;
   std::string *string;
@@ -45,7 +46,7 @@ void yyerror(const char *s) { printf("error at line: %llu %s\n", linecount, s); 
 %type <varvec> func_decl_args
 %type <exprvec> call_args
 %type <block> program stmts block
-%type <stmt> stmt var_decl func_decl func_proto
+%type <stmt> stmt var_decl func_decl class_decl
 %type <token> comparison
 
 /* Operator precedence for mathematical operators */
@@ -64,8 +65,7 @@ stmts : stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }
     | stmts stmt { $1->statements.push_back($<stmt>2); }
     ;
 
-stmt : var_decl | func_decl
-   | expr { $$ = new NExpressionStatement(*$1); }
+stmt : class_decl | var_decl | func_decl | expr { $$ = new NExpressionStatement($1); }
    ;
 
 block : stmts TENDKW { $$ = $1; }
@@ -77,7 +77,11 @@ var_decl : ident ident { $$ = new NVariableDeclaration(*$1, *$2); }
        | ident ident TEQUAL expr { $$ = new NVariableDeclaration(*$1, *$2, $4); }
        ;
 
-func_decl : 
+class_decl : TCLSKW ident stmts TENDKW { $$ = new NClass($2->name,nullptr); delete $2; }
+
+;
+
+func_decl :
 			 /************************
 			  *  Function prototype
 			  ***********************/

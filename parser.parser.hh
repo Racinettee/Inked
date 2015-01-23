@@ -101,12 +101,13 @@ union YYSTYPE
   NStatement *stmt;
   NIdentifier *ident;
   NVariableDeclaration *var_decl;
+  NClass* nclass;
   std::vector<NVariableDeclaration*> *varvec;
   std::vector<NExpression*> *exprvec;
   std::string *string;
   int token;
 
-#line 110 "/home/steve/Documents/Inked/parser.parser.hh" /* yacc.c:1909  */
+#line 111 "/home/steve/Documents/Inked/parser.parser.hh" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
