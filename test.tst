@@ -17,3 +17,5 @@ printf("You entered: %s", inp)
 class heythere
 	long heyboy
 end
+
+heythere boy

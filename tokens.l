@@ -26,7 +26,7 @@ proto							return TOKEN(TPROTOKW);
 unless                  return TOKEN(TUNLKW);
 while                   return TOKEN(TWHLKW);
 
-\"(\\.|[^"])*\"         {puts("got string literal");SAVE_TOKEN;return  TSLITERAL;}
+\"(\\.|[^"])*\"         {SAVE_TOKEN;return  TSLITERAL;}
 
 [ \t]                   ;
 \n                      ++linecount;

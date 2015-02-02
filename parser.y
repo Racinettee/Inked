@@ -74,10 +74,13 @@ block : stmts TENDKW { $$ = $1; }
     ;
 
 var_decl : ident ident { $$ = new NVariableDeclaration(*$1, *$2); }
-       | ident ident TEQUAL expr { $$ = new NVariableDeclaration(*$1, *$2, $4); }
+       | ident ident TEQUAL expr { 
+       		printf("Found variable def: %s: %s\n", $1->name.c_str(),$2->name.c_str());
+       		$$ = new NVariableDeclaration(*$1, *$2, $4);
+       }
        ;
 
-class_decl : TCLSKW ident stmts TENDKW { $$ = new NClass($2->name,nullptr); delete $2; }
+class_decl : TCLSKW ident stmts TENDKW { $$ = new NClass($2->name,$3->statements); delete $2; delete $3; }
 
 ;
 
@@ -88,11 +91,25 @@ func_decl :
 			   TPROTOKW ident {VariableList vl; NIdentifier type("void");$$ = new NFunctionPrototype(type, *$2, vl);}
 			 | TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident {$$=new NFunctionPrototype(*$7,*$2,*$4); delete $4;}
 			 /**************************
-			  * Function definitions
+			  * Function definition: function name ... end
 			  *************************/
-			 | TFCTNKW ident block { VariableList vl; NIdentifier type("void"); $$ = new NFunctionDeclaration(type, *$2, vl, *$3); }
-			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN block {NIdentifier type("void");$$ = new NFunctionDeclaration(type, *$2, *$4, *$6);}
-			 | TFCTNKW ident TASKW ident block {  VariableList vl; $$ = new NFunctionDeclaration(*$4, *$2, vl, *$5);}
+			 | TFCTNKW ident block {
+			 		//printf("Found function def: %s\n", $2->name.c_str());
+			 		VariableList vl; 
+			 		//NIdentifier type("void");
+			 		$$ = new NFunctionDeclaration("void", *$2, vl, *$3);
+			 }
+			 /********************************
+			  * Function def: function name(...) ... end
+			  ********************************/			
+			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN block {
+			 		// NIdentifier type("void");
+			 		$$ = new NFunctionDeclaration("void", *$2, *$4, *$6);
+			 }
+			 | TFCTNKW ident TASKW ident block { 
+			 		VariableList vl;
+			 		$$ = new NFunctionDeclaration(*$4, *$2, vl, *$5);
+			 }
 			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block { $$ = new NFunctionDeclaration(*$7, *$2, *$4, *$8); delete $4; }
 		    ;
 

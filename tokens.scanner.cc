@@ -884,7 +884,7 @@ case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
 #line 29 "/home/steve/Documents/Inked/tokens.l"
-{puts("got string literal");SAVE_TOKEN;return  TSLITERAL;}
+{SAVE_TOKEN;return  TSLITERAL;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP

@@ -485,10 +485,10 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    61,    61,    64,    65,    68,    68,    68,    68,    71,
-      72,    73,    76,    77,    80,    88,    89,    93,    94,    95,
-      96,    99,   100,   101,   104,   107,   109,   110,   113,   114,
-     115,   116,   117,   118,   119,   122,   123,   124,   127,   127,
-     127,   127,   127,   127,   128,   128,   128,   128
+      72,    73,    76,    77,    83,    91,    92,    96,   102,   103,
+     104,   107,   108,   109,   112,   115,   117,   118,   121,   122,
+     123,   124,   125,   126,   127,   130,   131,   132,   135,   135,
+     135,   135,   135,   135,   136,   136,   136,   136
 };
 #endif
 
@@ -1385,144 +1385,152 @@ yyreduce:
 
   case 13:
 #line 77 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
-    { (yyval.stmt) = new NVariableDeclaration(*(yyvsp[-3].ident), *(yyvsp[-2].ident), (yyvsp[0].expr)); }
-#line 1390 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+    { 
+       		printf("Found variable def: %s: %s\n", (yyvsp[-3].ident)->name.c_str(),(yyvsp[-2].ident)->name.c_str());
+       		(yyval.stmt) = new NVariableDeclaration(*(yyvsp[-3].ident), *(yyvsp[-2].ident), (yyvsp[0].expr));
+       }
+#line 1393 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 80 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
-    { (yyval.stmt) = new NClass((yyvsp[-2].ident)->name,nullptr); delete (yyvsp[-2].ident); }
-#line 1396 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 83 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+    { (yyval.stmt) = new NClass((yyvsp[-2].ident)->name,(yyvsp[-1].block)->statements); delete (yyvsp[-2].ident); delete (yyvsp[-1].block); }
+#line 1399 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 88 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 91 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     {VariableList vl; NIdentifier type("void");(yyval.stmt) = new NFunctionPrototype(type, *(yyvsp[0].ident), vl);}
-#line 1402 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1405 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 89 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 92 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     {(yyval.stmt)=new NFunctionPrototype(*(yyvsp[0].ident),*(yyvsp[-5].ident),*(yyvsp[-3].varvec)); delete (yyvsp[-3].varvec);}
-#line 1408 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1411 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 93 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
-    { VariableList vl; NIdentifier type("void"); (yyval.stmt) = new NFunctionDeclaration(type, *(yyvsp[-1].ident), vl, *(yyvsp[0].block)); }
-#line 1414 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 96 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+    {
+			 		//printf("Found function def: %s\n", $2->name.c_str());
+			 		VariableList vl; 
+			 		//NIdentifier type("void");
+			 		(yyval.stmt) = new NFunctionDeclaration("void", *(yyvsp[-1].ident), vl, *(yyvsp[0].block));//type, *$2, vl, *$3);
+			 }
+#line 1422 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 94 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 102 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     {NIdentifier type("void");(yyval.stmt) = new NFunctionDeclaration(type, *(yyvsp[-4].ident), *(yyvsp[-2].varvec), *(yyvsp[0].block));}
-#line 1420 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1428 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 95 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 103 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     {  VariableList vl; (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-1].ident), *(yyvsp[-3].ident), vl, *(yyvsp[0].block));}
-#line 1426 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1434 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 96 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 104 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.stmt) = new NFunctionDeclaration(*(yyvsp[-1].ident), *(yyvsp[-6].ident), *(yyvsp[-4].varvec), *(yyvsp[0].block)); delete (yyvsp[-4].varvec); }
-#line 1432 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1440 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 99 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 107 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.varvec) = new VariableList(); }
-#line 1438 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1446 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 100 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 108 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.varvec) = new VariableList(); (yyval.varvec)->push_back((yyvsp[0].var_decl)); }
-#line 1444 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1452 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 101 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 109 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyvsp[-2].varvec)->push_back((yyvsp[0].var_decl)); }
-#line 1450 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1458 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 104 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 112 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.ident) = new NIdentifier(*(yyvsp[0].string)); delete (yyvsp[0].string); }
-#line 1456 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1464 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 107 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 115 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NString(*(yyvsp[0].string)); delete (yyvsp[0].string); }
-#line 1462 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1470 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 109 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 117 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NInteger(atol((yyvsp[0].string)->c_str())); delete (yyvsp[0].string); }
-#line 1468 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1476 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 110 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 118 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NDouble(atof((yyvsp[0].string)->c_str())); delete (yyvsp[0].string); }
-#line 1474 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1482 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 113 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 121 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NAssignment(*(yyvsp[-2].ident), *(yyvsp[0].expr)); }
-#line 1480 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1488 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 114 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 122 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NMethodCall(*(yyvsp[-3].ident), *(yyvsp[-1].exprvec)); delete (yyvsp[-1].exprvec); }
-#line 1486 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1494 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 115 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 123 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.ident) = (yyvsp[0].ident); }
-#line 1492 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1500 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 118 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 126 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = new NBinaryOperator(*(yyvsp[-2].expr), (yyvsp[-1].token), *(yyvsp[0].expr)); }
-#line 1498 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1506 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 119 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 127 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.expr) = (yyvsp[-1].expr); }
-#line 1504 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1512 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 122 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 130 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.exprvec) = new ExpressionList(); }
-#line 1510 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1518 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 123 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 131 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyval.exprvec) = new ExpressionList(); (yyval.exprvec)->push_back((yyvsp[0].expr)); }
-#line 1516 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1524 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 124 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
+#line 132 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1646  */
     { (yyvsp[-2].exprvec)->push_back((yyvsp[0].expr)); }
-#line 1522 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1530 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
     break;
 
 
-#line 1526 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
+#line 1534 "/home/steve/Documents/Inked/parser.parser.cc" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1750,5 +1758,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 131 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1906  */
+#line 139 "/home/steve/Documents/Inked/parser.y" /* yacc.c:1906  */
 

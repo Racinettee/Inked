@@ -1,4 +1,5 @@
-
+#ifndef INKED_AST_NODE_H
+#define INKED_AST_NODE_H
 
 #include <iostream>
 #include <vector>
@@ -27,14 +28,6 @@ class NStatement : public NExpression {
 };
 class NBlock;
 
-class NClass : public NStatement {
-public:
-  NBlock* block;
-  std::string name;
-  NClass(const std::string& n, NBlock* b):name(n), block(b) { }
-  virtual llvm::Value* codeGen(ICompilerEngine*);
-};
-
 class NInteger : public NExpression {
 public:
   long long value;
@@ -61,16 +54,6 @@ public:
     std::string name;
     NIdentifier(const std::string& name) : name(name) { }
     virtual llvm::Value* codeGen(ICompilerEngine*);
-};
-
-class NMethodCall : public NExpression {
-public:
-    const NIdentifier& id;
-    ExpressionList arguments;
-    NMethodCall(const NIdentifier& id, ExpressionList& arguments) :
-        id(id), arguments(arguments) { }
-    NMethodCall(const NIdentifier& id) : id(id) { }
-    virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
 class NBinaryOperator : public NExpression {
@@ -107,44 +90,8 @@ public:
   virtual llvm::Value* codeGen(ICompilerEngine* context);
 };
 
-class NVariableDeclaration : public NStatement {
-public:
-  const NIdentifier& type;
-  NIdentifier& id;
-  NExpression *assignmentExpr;
-  NVariableDeclaration(const NIdentifier& type, NIdentifier& id) :
-      type(type), id(id) { }
-  NVariableDeclaration(const NIdentifier& type, NIdentifier& id, NExpression *assignmentExpr) :
-      type(type), id(id), assignmentExpr(assignmentExpr) { }
-  virtual llvm::Value* codeGen(ICompilerEngine* context);
-};
+#include "VariableNodes.hpp"
+#include "ClassNode.hpp"
+#include "FunctionNode.hpp"
 
-// NVariableReference stores an llvm value ptr to directly reference a variable
-class NVariableReference : public NStatement {
-public:
-  const NIdentifier& name;
-  llvm::Value* value = nullptr;
-
-  NVariableReference(const NIdentifier& name, llvm::Value* value):name(name), value(value){ }
-
-  virtual llvm::Value* codeGen(ICompilerEngine* ctx);
-};
-
-class NFunctionPrototype : public NStatement {
-public:
-  const NIdentifier& type;
-  const NIdentifier& id;
-  VariableList arguments;
-  NFunctionPrototype(const NIdentifier& type, const NIdentifier& id, const VariableList& arguments):
-    type(type), id(id), arguments(arguments) { }
-  virtual llvm::Value* codeGen(ICompilerEngine* context);
-};
-
-class NFunctionDeclaration : public NFunctionPrototype {
-public:
-  NBlock& block;
-  NFunctionDeclaration(const NIdentifier& type, const NIdentifier& id,
-          const VariableList& arguments, NBlock& block) :
-    NFunctionPrototype(type, id, arguments), block(block) { }
-  virtual llvm::Value* codeGen(ICompilerEngine* context);
-};
+#endif // INKED_AST_NODE_H

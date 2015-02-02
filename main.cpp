@@ -8,6 +8,7 @@ extern NBlock* programBlock;
 extern FILE *yyin;
 
 unsigned long long linecount = 0;
+ICompilerEngine* ICompilerEngine::engine;
 
 int main(int argc, char** argv)
 {
@@ -27,6 +28,9 @@ int main(int argc, char** argv)
 	using CompEngine = std::unique_ptr<CompilerEngine>;
 
 	CompEngine cengine(new CompilerEngine());
+
+	ICompilerEngine::engine = cengine.get();
+
 	cengine->StartGen(programBlock);
 	cengine->Test();
 	return 0;

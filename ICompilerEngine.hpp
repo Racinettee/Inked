@@ -22,13 +22,20 @@ using namespace llvm;
 #include <string>
 
 class NBlock;
+class IClass;
 
 class ICompilerEngine {
+public:
+  enum class Ctxt {
+    Function,
+    Class,
+    Namespace
+  };
 public:
   // The builder is here cause it is one of those things
   // that will probably persist in any offshoot implementation
   IRBuilder<> builder;
-  std::map<std::string, Type*> type_table;
+  static ICompilerEngine* engine;
 public:
   ICompilerEngine(LLVMContext& ctx): builder(ctx) { }
 
@@ -37,14 +44,27 @@ public:
   virtual Type*             TypeOf(const std::string&) = 0;
 
   virtual Function*         CurrentFunction() = 0;
-  virtual BasicBlock*       CurrentBBlock () = 0;
-  virtual Module*           CurrentModule () = 0;
+  virtual BasicBlock*       CurrentBBlock  () = 0;
+  virtual Module*           CurrentModule  () = 0;
   virtual ValueSymbolTable* CurrentValSymTable () = 0;
 
   virtual void PushBlock (BasicBlock* bb) = 0;
   virtual void PopBlock () = 0;
   virtual void StartGen (NBlock* root) = 0;
   virtual GenericValue Test () = 0;
+
+  // A node, or client can use this to figure out
+  // if its being parsed inside of a class or a function
+  virtual Ctxt CurrentCtxtTy() const = 0;
+  virtual void PushContext(Ctxt) = 0;
+  virtual void PopContext() = 0;
+
+  virtual IClass* CurrentClass() = 0;
+  // ---------------------------------
+  virtual void PushClass(IClass*) = 0;
+  virtual void PopClass() = 0;
+  // -------------------------
+  virtual void AddType(const std::string&, llvm::Type*) = 0;
 
   virtual ~ICompilerEngine(){ }
 };

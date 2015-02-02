@@ -55,7 +55,7 @@
 	"parser.parser.hh"
 	<unistd.h>
 
-1421785407 source:/home/steve/Documents/Inked/main.cpp
+1422604446 source:/home/steve/Documents/Inked/main.cpp
 	<iostream>
 	"CompilerEngine.hpp"
 	"node.h"
@@ -79,27 +79,30 @@
 	<llvm/ExecutionEngine/JIT.h>
 	<llvm/Support/raw_ostream.h>
 
-1422000111 /home/steve/Documents/Inked/node.h
+1422064000 /home/steve/Documents/Inked/node.h
 	<iostream>
 	<vector>
 	<llvm/IR/Value.h>
+	"VariableNodes.hpp"
+	"ClassNode.hpp"
+	"FunctionNode.hpp"
 
-1422000600 source:/home/steve/Documents/Inked/parser.y
+1422609922 source:/home/steve/Documents/Inked/parser.y
 	"node.h"
 
-1421437423 source:/home/steve/Documents/Inked/tokens.l
+1422057792 source:/home/steve/Documents/Inked/tokens.l
 	<string>
 	"node.h"
 	"parser.parser.hh"
 
-1422000608 /home/steve/Documents/Inked/parser.parser.hh
+1422671415 /home/steve/Documents/Inked/parser.parser.hh
 
-1422002905 source:/home/steve/Documents/Inked/codegen.cpp
+1422609172 source:/home/steve/Documents/Inked/codegen.cpp
 	"node.h"
 	"ICompilerEngine.hpp"
 	"parser.parser.hh"
 
-1422003204 /home/steve/Documents/Inked/ICompilerEngine.hpp
+1422606905 /home/steve/Documents/Inked/ICompilerEngine.hpp
 	<llvm/IR/Module.h>
 	<llvm/IR/Function.h>
 	<llvm/IR/Type.h>
@@ -120,12 +123,39 @@
 	<map>
 	<string>
 
-1421784824 source:/home/steve/Documents/Inked/CompilerEngine.cpp
+1422668767 source:/home/steve/Documents/Inked/CompilerEngine.cpp
 	"node.h"
 	"CompilerEngine.hpp"
 	"parser.parser.hh"
 
-1422003032 /home/steve/Documents/Inked/CompilerEngine.hpp
+1422606938 /home/steve/Documents/Inked/CompilerEngine.hpp
 	<stack>
 	"ICompilerEngine.hpp"
+
+1422064434 /home/steve/Documents/Inked/VariableNodes.hpp
+
+1422608056 /home/steve/Documents/Inked/ClassNode.hpp
+	"ICompilerEngine.hpp"
+	"IClass.hpp"
+	"node.h"
+	<utility>
+
+1422671780 /home/steve/Documents/Inked/FunctionNode.hpp
+
+1422605386 /home/steve/Documents/Inked/IClass.hpp
+	<string>
+
+1422668472 source:/home/steve/Documents/Inked/FunctionCodeGen.cpp
+	"node.h"
+	"ICompilerEngine.hpp"
+	"parser.parser.hh"
+
+1422607494 source:/home/steve/Documents/Inked/ClassNode.cpp
+	"ICompilerEngine.hpp"
+	"ClassNode.hpp"
+
+1422606592 source:/home/steve/Documents/Inked/VariableCodeGen.cpp
+	"ICompilerEngine.hpp"
+	"node.h"
+	"VariableNodes.hpp"
 

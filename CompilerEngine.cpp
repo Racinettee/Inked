@@ -21,6 +21,37 @@ CompilerEngine::CompilerEngine():
   type_table["cstring"]=Type::getInt8PtrTy(getGlobalContext());
   puts("Basic types registered");
 }
+ICompilerEngine::Ctxt CompilerEngine::CurrentCtxtTy() const
+{
+  return ctxt_stak.top();
+}
+void CompilerEngine::PushContext(Ctxt nctx)
+{
+  ctxt_stak.push(nctx);
+}
+void CompilerEngine::PopContext()
+{
+  ctxt_stak.pop();
+}
+IClass* CompilerEngine::CurrentClass()
+{
+  return class_stak.top();
+}
+void CompilerEngine::PushClass(IClass* cls)
+{
+  class_stak.push(cls);
+  ctxt_stak.push(Ctxt::Class);
+}
+void CompilerEngine::PopClass()
+{
+  assert(ctxt_stak.top() == Ctxt::Class);
+  ctxt_stak.pop();
+  class_stak.pop();
+}
+void CompilerEngine::AddType(const std::string& s, llvm::Type* t)
+{
+  type_table[s] = t;
+}
 /* Returns an LLVM type based on the identifier */
 Type* CompilerEngine::TypeOf(const std::string& type)
 {
