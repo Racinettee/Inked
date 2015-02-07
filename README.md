@@ -14,19 +14,18 @@ Here is a current working example:<br>
 proto puts(cstring str) as int<br>
 proto gets(cstring str) as cstring<br>
 proto printf(cstring str) as int<br>
-<br>
+
 cstring hello = "Hello"<br>
-<br>
+
 function greet<br>
-	long ey = 4	<br>
-	printf("Hey %i %i %i %i", 1,2,3, ey)<br>
+&nbsp;&nbsp;long ey = 4	<br>
+&nbsp;&nbsp;printf("Hey %i %i %i %i", 1,2,3, ey)<br>
 end<br>
-<br>
 
 greet()<br>
 puts("")<br>
 if(1 == 0)<br>
-	puts("HeyLow")<br>
+&nbsp;&nbsp;puts("HeyLow")<br>
 end<br>
 printf("Enter something... : ) ")<br>
 cstring inp = gets("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")<br>
@@ -34,7 +33,7 @@ puts("")<br>
 printf("You entered: %s", inp)<br>
 <br>
 class heythere<br>
-	long heyboy<br>
+&nbsp;&nbsp;long heyboy<br>
 end<br>
 
 heythere boy
