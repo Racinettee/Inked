@@ -44,6 +44,11 @@ public:
   virtual Type*             TypeOf(const std::string&) = 0;
 
   virtual Function*         CurrentFunction() = 0;
+  // --------------------------------------------
+  // May also push or pop current context in implementations
+  virtual void PushFunction(Function*) = 0;
+  virtual void PopFunction() = 0;
+
   virtual BasicBlock*       CurrentBBlock  () = 0;
   virtual Module*           CurrentModule  () = 0;
   virtual ValueSymbolTable* CurrentValSymTable () = 0;
@@ -65,6 +70,8 @@ public:
   virtual void PopClass() = 0;
   // -------------------------
   virtual void AddType(const std::string&, llvm::Type*) = 0;
+  // --------------------------
+  virtual void PrintStacks() = 0;
 
   virtual ~ICompilerEngine(){ }
 };

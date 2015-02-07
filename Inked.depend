@@ -79,30 +79,31 @@
 	<llvm/ExecutionEngine/JIT.h>
 	<llvm/Support/raw_ostream.h>
 
-1422064000 /home/steve/Documents/Inked/node.h
+1423170707 /home/steve/Documents/Inked/node.h
 	<iostream>
 	<vector>
 	<llvm/IR/Value.h>
 	"VariableNodes.hpp"
 	"ClassNode.hpp"
 	"FunctionNode.hpp"
+	"IfNode.hpp"
 
-1422609922 source:/home/steve/Documents/Inked/parser.y
+1423188248 source:/home/steve/Documents/Inked/parser.y
 	"node.h"
 
-1422057792 source:/home/steve/Documents/Inked/tokens.l
+1422914038 source:/home/steve/Documents/Inked/tokens.l
 	<string>
 	"node.h"
 	"parser.parser.hh"
 
-1422671415 /home/steve/Documents/Inked/parser.parser.hh
+1423264280 /home/steve/Documents/Inked/parser.parser.hh
 
-1422609172 source:/home/steve/Documents/Inked/codegen.cpp
+1423259295 source:/home/steve/Documents/Inked/codegen.cpp
 	"node.h"
 	"ICompilerEngine.hpp"
 	"parser.parser.hh"
 
-1422606905 /home/steve/Documents/Inked/ICompilerEngine.hpp
+1423263660 /home/steve/Documents/Inked/ICompilerEngine.hpp
 	<llvm/IR/Module.h>
 	<llvm/IR/Function.h>
 	<llvm/IR/Type.h>
@@ -123,12 +124,12 @@
 	<map>
 	<string>
 
-1422668767 source:/home/steve/Documents/Inked/CompilerEngine.cpp
+1423265705 source:/home/steve/Documents/Inked/CompilerEngine.cpp
 	"node.h"
 	"CompilerEngine.hpp"
 	"parser.parser.hh"
 
-1422606938 /home/steve/Documents/Inked/CompilerEngine.hpp
+1423263678 /home/steve/Documents/Inked/CompilerEngine.hpp
 	<stack>
 	"ICompilerEngine.hpp"
 
@@ -142,10 +143,10 @@
 
 1422671780 /home/steve/Documents/Inked/FunctionNode.hpp
 
-1422605386 /home/steve/Documents/Inked/IClass.hpp
+1422912413 /home/steve/Documents/Inked/IClass.hpp
 	<string>
 
-1422668472 source:/home/steve/Documents/Inked/FunctionCodeGen.cpp
+1423205855 source:/home/steve/Documents/Inked/FunctionCodeGen.cpp
 	"node.h"
 	"ICompilerEngine.hpp"
 	"parser.parser.hh"
@@ -158,4 +159,10 @@
 	"ICompilerEngine.hpp"
 	"node.h"
 	"VariableNodes.hpp"
+
+1423103487 /home/steve/Documents/Inked/IfNode.hpp
+	"node.h"
+
+1423265680 source:/home/steve/Documents/Inked/IfNode.cpp
+	"IfNode.hpp"
 

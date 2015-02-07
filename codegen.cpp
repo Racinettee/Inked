@@ -27,6 +27,14 @@ Value* NIdentifier::codeGen(ICompilerEngine* context)
 	std::cout << "Creating identifier reference: " << name << std::endl;
   auto current_block = context->CurrentBBlock();
 	auto sym_table = context->CurrentValSymTable();
+	if(sym_table == nullptr)
+	{
+	  auto func = context->CurrentFunction();//current_block->getParent();
+	  assert(func != nullptr);
+    sym_table = &func->getValueSymbolTable();
+    //sym_table = &context->CurrentFunction()->getValueSymbolTable ();
+	}
+	assert(sym_table!=nullptr);
 	auto val = sym_table->lookup(name);
 
   if(val == nullptr){
@@ -40,15 +48,18 @@ Value* NBinaryOperator::codeGen(ICompilerEngine* context)
 {
 	std::cout << "Creating binary operation " << op << std::endl;
 	Instruction::BinaryOps instr;
+	auto builder = context->builder;
 	switch (op) {
 		case TPLUS: 	instr = Instruction::Add; goto math;
 		case TMINUS: 	instr = Instruction::Sub; goto math;
 		case TMUL: 		instr = Instruction::Mul; goto math;
 		case TDIV: 		instr = Instruction::SDiv; goto math;
-
-		/* TODO comparison */
+		/* comparison */
+		case TCEQ:
+      return builder.CreateICmpEQ(
+            lhs.codeGen(context),
+            rhs.codeGen(context), "equivtest");
 	}
-
 	return NULL;
 math:
 	return BinaryOperator::Create(instr, lhs.codeGen(context),

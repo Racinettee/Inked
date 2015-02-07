@@ -93,5 +93,6 @@ public:
 #include "VariableNodes.hpp"
 #include "ClassNode.hpp"
 #include "FunctionNode.hpp"
+#include "IfNode.hpp"
 
 #endif // INKED_AST_NODE_H

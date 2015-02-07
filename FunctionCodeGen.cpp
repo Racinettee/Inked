@@ -46,6 +46,8 @@ Value* NFunctionDeclaration::codeGen(ICompilerEngine* context)
 	Function *function = Function::Create(ftype, GlobalValue::InternalLinkage, id.name, context->CurrentModule());
 	BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", function, 0);
 
+	context->PushFunction(function);
+
 	int ctr = 0;
 	for(auto itr = function->arg_begin(); itr != function->arg_end(); itr++)
   {
@@ -66,6 +68,8 @@ Value* NFunctionDeclaration::codeGen(ICompilerEngine* context)
 	ReturnInst::Create(getGlobalContext(), bblock);
 
 	context->PopBlock();
+
+	context->PopFunction();
 	std::cout << "Creating function: " << id.name << std::endl;
 	return function;
 }

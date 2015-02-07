@@ -21,6 +21,18 @@ CompilerEngine::CompilerEngine():
   type_table["cstring"]=Type::getInt8PtrTy(getGlobalContext());
   puts("Basic types registered");
 }
+  // May also push or pop current context in implementations
+void CompilerEngine::PushFunction(Function* f)
+{
+  function_stak.push(f);
+  PushContext(Ctxt::Function);
+}
+void CompilerEngine::PopFunction()
+{
+  assert(CurrentCtxtTy()==Ctxt::Function);
+  PopContext();
+  function_stak.pop();
+}
 ICompilerEngine::Ctxt CompilerEngine::CurrentCtxtTy() const
 {
   return ctxt_stak.top();
@@ -63,7 +75,7 @@ Type* CompilerEngine::TypeOf(const std::string& type)
 }
 Function* CompilerEngine::CurrentFunction()
 {
-  return current_function;
+  return function_stak.top();//current_function;
 }
 BasicBlock* CompilerEngine::CurrentBBlock()
 {
@@ -111,16 +123,20 @@ void CompilerEngine::StartGen(NBlock* root)
   current_module = main_module;
 	BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", main_function, 0);
 	puts("Main function created. Generating code...");
+	this->PushFunction(main_function);
 	this->PushBlock(bblock);
 
 	// start generating code from root and the others now
 	root->codeGen(this);
 
 	builder.CreateRetVoid();
+	CurrentModule()->dump();
 
 	this->PopBlock();
-
-	main_module->dump();
+	this->PopFunction();
+  //builder.CreateRetVoid();
+	//main_module->dump();
+	PrintStacks();
 }
 /* Executes the AST by running the main function */
 GenericValue CompilerEngine::Test() {
@@ -139,4 +155,31 @@ GenericValue CompilerEngine::Test() {
 	cout << error_str << endl;
 	puts("The code was run.");
   return v;
+}
+void CompilerEngine::PrintStacks()
+{
+  puts("Remaining function stak:");
+  while(!function_stak.empty())
+  {
+    cout << "   " << function_stak.top();
+    function_stak.pop();
+  }
+  puts("Remaining block stak:");
+  while(!block_stack.empty())
+  {
+    cout << "   " << block_stack.top();
+    block_stack.pop();
+  }
+  puts("Remaining class stack");
+  while(!class_stak.empty())
+  {
+    cout << "   " << class_stak.top();
+    class_stak.pop();
+  }
+  puts("Remaining context stack");
+  while(!ctxt_stak.empty())
+  {
+    cout << "   " << (int)ctxt_stak.top();
+    ctxt_stak.pop();
+  }
 }

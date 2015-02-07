@@ -45,6 +45,8 @@
 		<Unit filename="FunctionNode.hpp" />
 		<Unit filename="IClass.hpp" />
 		<Unit filename="ICompilerEngine.hpp" />
+		<Unit filename="IfNode.cpp" />
+		<Unit filename="IfNode.hpp" />
 		<Unit filename="VariableCodeGen.cpp" />
 		<Unit filename="VariableNodes.hpp" />
 		<Unit filename="codegen.cpp" />

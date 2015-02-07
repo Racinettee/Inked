@@ -14,6 +14,10 @@ public:
   Type*             TypeOf(const std::string&);
 
   Function*         CurrentFunction();
+  // -----------------------
+  void PushFunction(Function*);
+  void PopFunction();
+  // -------------------
   BasicBlock*       CurrentBBlock();
   Module*           CurrentModule();
   ValueSymbolTable* CurrentValSymTable();
@@ -33,13 +37,16 @@ public:
   void PopClass();
   // --------------------
   void AddType(const std::string&, llvm::Type*);
+  // ---------------------
+  void PrintStacks();
 private:
   std::stack<IClass*> class_stak;
+  std::stack<Function*> function_stak;
   std::map<std::string, Type*> type_table;
   std::stack<BasicBlock*> block_stack;
   std::stack<Ctxt> ctxt_stak;
   // ---------------------------------
-  Function*               current_function;
+  //Function*               current_function;
   Module*                 main_module;
   Module*                 current_module;
   ValueSymbolTable*       current_lookup;

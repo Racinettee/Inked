@@ -22,7 +22,7 @@ exit                    return TOKEN(TEXITKW);
 for                     return TOKEN(TFORKW);
 function                return TOKEN(TFCTNKW);
 if                      return TOKEN(TIFKW);
-proto							return TOKEN(TPROTOKW);
+proto										return TOKEN(TPROTOKW);
 unless                  return TOKEN(TUNLKW);
 while                   return TOKEN(TWHLKW);
 

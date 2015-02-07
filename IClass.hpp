@@ -7,6 +7,7 @@ public:
   struct Triple {
     int class_index;
     llvm::Type* type;
+    // Value is actually gonna be useless probably
     llvm::Value* value;
     // ----------------
     Triple(int ind, llvm::Type* ty, llvm::Value* val):

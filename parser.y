@@ -46,7 +46,7 @@ void yyerror(const char *s) { printf("error at line: %llu %s\n", linecount, s); 
 %type <varvec> func_decl_args
 %type <exprvec> call_args
 %type <block> program stmts block
-%type <stmt> stmt var_decl func_decl class_decl
+%type <stmt> stmt var_decl func_decl class_decl if_stmt
 %type <token> comparison
 
 /* Operator precedence for mathematical operators */
@@ -58,14 +58,18 @@ void yyerror(const char *s) { printf("error at line: %llu %s\n", linecount, s); 
 %%
 
 program
-  : stmts { programBlock = $1; }
-  ;
+: stmts { programBlock = $1; }
+;
 
-stmts : stmt { $$ = new NBlock(); $$->statements.push_back($<stmt>1); }
-    | stmts stmt { $1->statements.push_back($<stmt>2); }
-    ;
+stmts
+: stmt {
+	$$ = new NBlock();
+	$$->statements.push_back($<stmt>1);
+}
+| stmts stmt { $1->statements.push_back($<stmt>2); }
+;
 
-stmt : class_decl | var_decl | func_decl | expr { $$ = new NExpressionStatement($1); }
+stmt : if_stmt | class_decl | var_decl | func_decl | expr { $$ = new NExpressionStatement($1); }
    ;
 
 block : stmts TENDKW { $$ = $1; }
@@ -73,15 +77,28 @@ block : stmts TENDKW { $$ = $1; }
     | TLBRACE TRBRACE { $$ = new NBlock(); }
     ;
 
-var_decl : ident ident { $$ = new NVariableDeclaration(*$1, *$2); }
-       | ident ident TEQUAL expr { 
-       		printf("Found variable def: %s: %s\n", $1->name.c_str(),$2->name.c_str());
-       		$$ = new NVariableDeclaration(*$1, *$2, $4);
-       }
-       ;
+var_decl
+: ident ident {
+	$$ = new NVariableDeclaration(*$1, *$2);
+}
+| ident ident TEQUAL expr {
+	// printf("Found variable def: %s: %s\n", $1->name.c_str(),$2->name.c_str());
+	$$ = new NVariableDeclaration(*$1, *$2, $4);
+}
+;
 
-class_decl : TCLSKW ident stmts TENDKW { $$ = new NClass($2->name,$3->statements); delete $2; delete $3; }
+if_stmt
+: TIFKW TLPAREN expr TRPAREN stmts TENDKW {
+	// somethin
+	$$ = new IfNode($3, $5->statements, nullptr);  //expr, stmts, els);
+	delete $5;
+}
 
+class_decl
+: TCLSKW ident stmts TENDKW {
+	$$ = new NClass($2->name,$3->statements);
+	delete $2; delete $3;
+}
 ;
 
 func_decl :
@@ -95,18 +112,18 @@ func_decl :
 			  *************************/
 			 | TFCTNKW ident block {
 			 		//printf("Found function def: %s\n", $2->name.c_str());
-			 		VariableList vl; 
+			 		VariableList vl;
 			 		//NIdentifier type("void");
 			 		$$ = new NFunctionDeclaration("void", *$2, vl, *$3);
 			 }
 			 /********************************
 			  * Function def: function name(...) ... end
-			  ********************************/			
+			  ********************************/
 			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN block {
 			 		// NIdentifier type("void");
 			 		$$ = new NFunctionDeclaration("void", *$2, *$4, *$6);
 			 }
-			 | TFCTNKW ident TASKW ident block { 
+			 | TFCTNKW ident TASKW ident block {
 			 		VariableList vl;
 			 		$$ = new NFunctionDeclaration(*$4, *$2, vl, *$5);
 			 }
