@@ -1,15 +1,14 @@
 Inked
 =====
 
-a compiler
+A compiler. It is made with flex, bison, and llvm 3.x.
 
-made following this tutorial: http://gnuu.org/2009/09/18/writing-your-own-toy-compiler/
+It is original based off of this tutorial:
+http://gnuu.org/2009/09/18/writing-your-own-toy-compiler/
 
-modified for llvm 3
+The syntax takes inspiration from a few languages.
 
-the syntax looks a little like ruby with some inspiration from c
-
-Here is a current working example:<br>
+Here is a current working example:
 
 proto puts(cstring str) as int<br>
 proto gets(cstring str) as cstring<br>
