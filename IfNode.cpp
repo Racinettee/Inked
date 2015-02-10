@@ -6,55 +6,44 @@ IfNode::IfNode(NExpression* cond, const StatementList& then, ElseNode* els)
 }
 llvm::Value* IfNode::codeGen(ICompilerEngine* ctxt)
 {
-  puts("At: ifnode codegen, ");
-
-  cout << body.size() << " nested statements." << endl;
-
   auto evaluation = condition->codeGen(ctxt);
-//
+  //
   auto& builder = ctxt->builder;
-//  // Convert condition to a bool by comparing equal to 0.0.
-  //evaluation = builder.CreateFCmpONE(
-      //evaluation, ConstantFP::get(getGlobalContext(), APFloat(0.0)), "ifcond");
-//
-  BasicBlock *ThenBB =
-      BasicBlock::Create(getGlobalContext(), "then", ctxt->CurrentFunction());
-  BasicBlock *ElseBB = BasicBlock::Create(getGlobalContext(), "continue", ctxt->CurrentFunction());
-  //BasicBlock *MergeBB = BasicBlock::Create(getGlobalContext(), "ifcont");
-//
-  builder.CreateCondBr(evaluation, ThenBB, ElseBB);
-//
-//  // Set Then Block
+  //
+  auto functn = ctxt->CurrentFunction();
+  //
+  BasicBlock* ElseBB = nullptr;
+  //
+  BasicBlock* ThenBB = BasicBlock::Create(getGlobalContext(), "then", functn);
+  ElseBB = (els != nullptr ? BasicBlock::Create(getGlobalContext(), "else", functn) : nullptr);
+  BasicBlock* ContBB = BasicBlock::Create(getGlobalContext(), "ifnd", functn);
+  //
+  builder.CreateCondBr(evaluation, ThenBB, ElseBB != nullptr? ElseBB : ContBB);
+  //
+  // Set Then Block
   ctxt->PushBlock(ThenBB);
-//
-//  // Generate if body
+  //
+  // Generate if body
   llvm::Value* then_val = nullptr;
 
   for(auto stat : body)
     then_val = stat->codeGen(ctxt);
 //
-  builder.CreateBr(ElseBB);
-//  // Have yet to understand what this one does
-  //builder.CreateBr(MergeBB);
-//  ThenBB = builder.GetInsertBlock();
-//
+  builder.CreateBr(ContBB); //ContBB);
+
   ctxt->PopBlock();
+
+  if(els != nullptr)
+  {
+    ctxt->PushBlock(ElseBB);
+    els->codeGen(ctxt);
+    builder.CreateBr(ContBB);
+    ctxt->PopBlock();
+  }
   // Pop again and set the insert point to continue
   ctxt->PopBlock();
-  ctxt->PushBlock(ElseBB);
-  //ctxt->CurrentModule()->dump();
-  //ctxt->CurrentFunction()->getBasicBlockList().push_back(ElseBB);
-  //ctxt->CurrentFunction()->getBasicBlockList().push_back(MergeBB);
-  //ctxt->PushBlock(MergeBB);
+  ctxt->PushBlock(ContBB);
 
-  //auto pn = builder.CreatePHI(Type::getVoidTy(getGlobalContext()), 1, "iftmp");
-
-  //pn->addIncoming(then_val, ThenBB);
-  //auto mod = ctxt->CurrentModule();
-  //mod->dump();
-
-
-  //return pn;
   return nullptr;
 }
 
@@ -64,5 +53,7 @@ ElseNode::ElseNode(const StatementList& then, IfNode* ifnode)
 }
 llvm::Value* ElseNode::codeGen(ICompilerEngine* ctxt)
 {
+  for(auto inst : body)
+    inst->codeGen(ctxt);
   return nullptr;
 }

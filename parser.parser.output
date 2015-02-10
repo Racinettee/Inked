@@ -5,7 +5,6 @@ Terminals unused in grammar
    TCONTKW
    TDOKW
    TDBLKW
-   TELSEKW
    TEXITKW
    TFORKW
    TLONGKW
@@ -46,95 +45,96 @@ Grammar
    13         | ident ident TEQUAL expr
 
    14 if_stmt: TIFKW TLPAREN expr TRPAREN stmts TENDKW
+   15        | TIFKW TLPAREN expr TRPAREN stmts TELSEKW stmts TENDKW
 
-   15 class_decl: TCLSKW ident stmts TENDKW
+   16 class_decl: TCLSKW ident stmts TENDKW
 
-   16 func_decl: TPROTOKW ident
-   17          | TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident
-   18          | TFCTNKW ident block
-   19          | TFCTNKW ident TLPAREN func_decl_args TRPAREN block
-   20          | TFCTNKW ident TASKW ident block
-   21          | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block
+   17 func_decl: TPROTOKW ident
+   18          | TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident
+   19          | TFCTNKW ident block
+   20          | TFCTNKW ident TLPAREN func_decl_args TRPAREN block
+   21          | TFCTNKW ident TASKW ident block
+   22          | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block
 
-   22 func_decl_args: %empty
-   23               | var_decl
-   24               | func_decl_args TCOMMA var_decl
+   23 func_decl_args: %empty
+   24               | var_decl
+   25               | func_decl_args TCOMMA var_decl
 
-   25 ident: TIDENTIFIER
+   26 ident: TIDENTIFIER
 
-   26 string_literal: TSLITERAL
+   27 string_literal: TSLITERAL
 
-   27 numeric: TINTEGER
-   28        | TDOUBLE
+   28 numeric: TINTEGER
+   29        | TDOUBLE
 
-   29 expr: ident TEQUAL expr
-   30     | ident TLPAREN call_args TRPAREN
-   31     | ident
-   32     | numeric
-   33     | string_literal
-   34     | expr comparison expr
-   35     | TLPAREN expr TRPAREN
+   30 expr: ident TEQUAL expr
+   31     | ident TLPAREN call_args TRPAREN
+   32     | ident
+   33     | numeric
+   34     | string_literal
+   35     | expr comparison expr
+   36     | TLPAREN expr TRPAREN
 
-   36 call_args: %empty
-   37          | expr
-   38          | call_args TCOMMA expr
+   37 call_args: %empty
+   38          | expr
+   39          | call_args TCOMMA expr
 
-   39 comparison: TCEQ
-   40           | TCNE
-   41           | TCLT
-   42           | TCLE
-   43           | TCGT
-   44           | TCGE
-   45           | TPLUS
-   46           | TMINUS
-   47           | TMUL
-   48           | TDIV
+   40 comparison: TCEQ
+   41           | TCNE
+   42           | TCLT
+   43           | TCLE
+   44           | TCGT
+   45           | TCGE
+   46           | TPLUS
+   47           | TMINUS
+   48           | TMUL
+   49           | TDIV
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-TIDENTIFIER (258) 25
-TINTEGER (259) 27
-TDOUBLE (260) 28
-TSLITERAL (261) 26
+TIDENTIFIER (258) 26
+TINTEGER (259) 28
+TDOUBLE (260) 29
+TSLITERAL (261) 27
 TBREAKKW (262)
 TCONSTKW (263)
-TCLSKW (264) 15
+TCLSKW (264) 16
 TCONTKW (265)
 TDOKW (266)
 TDBLKW (267)
-TELSEKW (268)
-TENDKW (269) 9 14 15
+TELSEKW (268) 15
+TENDKW (269) 9 14 15 16
 TEXITKW (270)
 TFORKW (271)
-TFCTNKW (272) 18 19 20 21
-TIFKW (273) 14
+TFCTNKW (272) 19 20 21 22
+TIFKW (273) 14 15
 TLONGKW (274)
 TUNLKW (275)
 TWHLKW (276)
-TASKW (277) 17 20 21
-TPROTOKW (278) 16 17
+TASKW (277) 18 21 22
+TPROTOKW (278) 17 18
 TQUOTE (279)
 TSQUOTE (280)
-TCEQ (281) 39
-TCNE (282) 40
-TCLT (283) 41
-TCLE (284) 42
-TCGT (285) 43
-TCGE (286) 44
-TEQUAL (287) 13 29
-TLPAREN (288) 14 17 19 21 30 35
-TRPAREN (289) 14 17 19 21 30 35
+TCEQ (281) 40
+TCNE (282) 41
+TCLT (283) 42
+TCLE (284) 43
+TCGT (285) 44
+TCGE (286) 45
+TEQUAL (287) 13 30
+TLPAREN (288) 14 15 18 20 22 31 36
+TRPAREN (289) 14 15 18 20 22 31 36
 TLBRACE (290) 10 11
 TRBRACE (291) 10 11
-TCOMMA (292) 24 38
+TCOMMA (292) 25 39
 TDOT (293)
-TPLUS (294) 45
-TMINUS (295) 46
-TMUL (296) 47
-TDIV (297) 48
+TPLUS (294) 46
+TMINUS (295) 47
+TMUL (296) 48
+TDIV (297) 49
 
 
 Nonterminals, with rules where they appear
@@ -144,33 +144,34 @@ $accept (43)
 program (44)
     on left: 1, on right: 0
 stmts (45)
-    on left: 2 3, on right: 1 3 9 10 14 15
+    on left: 2 3, on right: 1 3 9 10 14 15 16
 stmt (46)
     on left: 4 5 6 7 8, on right: 2 3
 block (47)
-    on left: 9 10 11, on right: 18 19 20 21
+    on left: 9 10 11, on right: 19 20 21 22
 var_decl (48)
-    on left: 12 13, on right: 6 23 24
+    on left: 12 13, on right: 6 24 25
 if_stmt (49)
-    on left: 14, on right: 4
+    on left: 14 15, on right: 4
 class_decl (50)
-    on left: 15, on right: 5
+    on left: 16, on right: 5
 func_decl (51)
-    on left: 16 17 18 19 20 21, on right: 7
+    on left: 17 18 19 20 21 22, on right: 7
 func_decl_args (52)
-    on left: 22 23 24, on right: 17 19 21 24
+    on left: 23 24 25, on right: 18 20 22 25
 ident (53)
-    on left: 25, on right: 12 13 15 16 17 18 19 20 21 29 30 31
+    on left: 26, on right: 12 13 16 17 18 19 20 21 22 30 31 32
 string_literal (54)
-    on left: 26, on right: 33
+    on left: 27, on right: 34
 numeric (55)
-    on left: 27 28, on right: 32
+    on left: 28 29, on right: 33
 expr (56)
-    on left: 29 30 31 32 33 34 35, on right: 8 13 14 29 34 35 37 38
+    on left: 30 31 32 33 34 35 36, on right: 8 13 14 15 30 35 36 38
+    39
 call_args (57)
-    on left: 36 37 38, on right: 30 38
+    on left: 37 38 39, on right: 31 39
 comparison (58)
-    on left: 39 40 41 42 43 44 45 46 47 48, on right: 34
+    on left: 40 41 42 43 44 45 46 47 48 49, on right: 35
 
 
 State 0
@@ -202,35 +203,35 @@ State 0
 
 State 1
 
-   25 ident: TIDENTIFIER .
+   26 ident: TIDENTIFIER .
 
-    $default  reduce using rule 25 (ident)
+    $default  reduce using rule 26 (ident)
 
 
 State 2
 
-   27 numeric: TINTEGER .
-
-    $default  reduce using rule 27 (numeric)
-
-
-State 3
-
-   28 numeric: TDOUBLE .
+   28 numeric: TINTEGER .
 
     $default  reduce using rule 28 (numeric)
 
 
+State 3
+
+   29 numeric: TDOUBLE .
+
+    $default  reduce using rule 29 (numeric)
+
+
 State 4
 
-   26 string_literal: TSLITERAL .
+   27 string_literal: TSLITERAL .
 
-    $default  reduce using rule 26 (string_literal)
+    $default  reduce using rule 27 (string_literal)
 
 
 State 5
 
-   15 class_decl: TCLSKW . ident stmts TENDKW
+   16 class_decl: TCLSKW . ident stmts TENDKW
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -239,10 +240,10 @@ State 5
 
 State 6
 
-   18 func_decl: TFCTNKW . ident block
-   19          | TFCTNKW . ident TLPAREN func_decl_args TRPAREN block
-   20          | TFCTNKW . ident TASKW ident block
-   21          | TFCTNKW . ident TLPAREN func_decl_args TRPAREN TASKW ident block
+   19 func_decl: TFCTNKW . ident block
+   20          | TFCTNKW . ident TLPAREN func_decl_args TRPAREN block
+   21          | TFCTNKW . ident TASKW ident block
+   22          | TFCTNKW . ident TLPAREN func_decl_args TRPAREN TASKW ident block
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -252,14 +253,15 @@ State 6
 State 7
 
    14 if_stmt: TIFKW . TLPAREN expr TRPAREN stmts TENDKW
+   15        | TIFKW . TLPAREN expr TRPAREN stmts TELSEKW stmts TENDKW
 
     TLPAREN  shift, and go to state 23
 
 
 State 8
 
-   16 func_decl: TPROTOKW . ident
-   17          | TPROTOKW . ident TLPAREN func_decl_args TRPAREN TASKW ident
+   17 func_decl: TPROTOKW . ident
+   18          | TPROTOKW . ident TLPAREN func_decl_args TRPAREN TASKW ident
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -268,7 +270,7 @@ State 8
 
 State 9
 
-   35 expr: TLPAREN . expr TRPAREN
+   36 expr: TLPAREN . expr TRPAREN
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -356,39 +358,39 @@ State 17
 
    12 var_decl: ident . ident
    13         | ident . ident TEQUAL expr
-   29 expr: ident . TEQUAL expr
-   30     | ident . TLPAREN call_args TRPAREN
-   31     | ident .
+   30 expr: ident . TEQUAL expr
+   31     | ident . TLPAREN call_args TRPAREN
+   32     | ident .
 
     TIDENTIFIER  shift, and go to state 1
     TEQUAL       shift, and go to state 29
     TLPAREN      shift, and go to state 30
 
-    TIDENTIFIER  [reduce using rule 31 (expr)]
-    TLPAREN      [reduce using rule 31 (expr)]
-    $default     reduce using rule 31 (expr)
+    TIDENTIFIER  [reduce using rule 32 (expr)]
+    TLPAREN      [reduce using rule 32 (expr)]
+    $default     reduce using rule 32 (expr)
 
     ident  go to state 31
 
 
 State 18
 
-   33 expr: string_literal .
+   34 expr: string_literal .
 
-    $default  reduce using rule 33 (expr)
+    $default  reduce using rule 34 (expr)
 
 
 State 19
 
-   32 expr: numeric .
+   33 expr: numeric .
 
-    $default  reduce using rule 32 (expr)
+    $default  reduce using rule 33 (expr)
 
 
 State 20
 
     8 stmt: expr .
-   34 expr: expr . comparison expr
+   35 expr: expr . comparison expr
 
     TCEQ    shift, and go to state 32
     TCNE    shift, and go to state 33
@@ -408,7 +410,7 @@ State 20
 
 State 21
 
-   15 class_decl: TCLSKW ident . stmts TENDKW
+   16 class_decl: TCLSKW ident . stmts TENDKW
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -434,10 +436,10 @@ State 21
 
 State 22
 
-   18 func_decl: TFCTNKW ident . block
-   19          | TFCTNKW ident . TLPAREN func_decl_args TRPAREN block
-   20          | TFCTNKW ident . TASKW ident block
-   21          | TFCTNKW ident . TLPAREN func_decl_args TRPAREN TASKW ident block
+   19 func_decl: TFCTNKW ident . block
+   20          | TFCTNKW ident . TLPAREN func_decl_args TRPAREN block
+   21          | TFCTNKW ident . TASKW ident block
+   22          | TFCTNKW ident . TLPAREN func_decl_args TRPAREN TASKW ident block
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -467,6 +469,7 @@ State 22
 State 23
 
    14 if_stmt: TIFKW TLPAREN . expr TRPAREN stmts TENDKW
+   15        | TIFKW TLPAREN . expr TRPAREN stmts TELSEKW stmts TENDKW
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -482,32 +485,32 @@ State 23
 
 State 24
 
-   16 func_decl: TPROTOKW ident .
-   17          | TPROTOKW ident . TLPAREN func_decl_args TRPAREN TASKW ident
+   17 func_decl: TPROTOKW ident .
+   18          | TPROTOKW ident . TLPAREN func_decl_args TRPAREN TASKW ident
 
     TLPAREN  shift, and go to state 50
 
-    TLPAREN   [reduce using rule 16 (func_decl)]
-    $default  reduce using rule 16 (func_decl)
+    TLPAREN   [reduce using rule 17 (func_decl)]
+    $default  reduce using rule 17 (func_decl)
 
 
 State 25
 
-   29 expr: ident . TEQUAL expr
-   30     | ident . TLPAREN call_args TRPAREN
-   31     | ident .
+   30 expr: ident . TEQUAL expr
+   31     | ident . TLPAREN call_args TRPAREN
+   32     | ident .
 
     TEQUAL   shift, and go to state 29
     TLPAREN  shift, and go to state 30
 
-    TLPAREN   [reduce using rule 31 (expr)]
-    $default  reduce using rule 31 (expr)
+    TLPAREN   [reduce using rule 32 (expr)]
+    $default  reduce using rule 32 (expr)
 
 
 State 26
 
-   34 expr: expr . comparison expr
-   35     | TLPAREN expr . TRPAREN
+   35 expr: expr . comparison expr
+   36     | TLPAREN expr . TRPAREN
 
     TCEQ     shift, and go to state 32
     TCNE     shift, and go to state 33
@@ -540,7 +543,7 @@ State 28
 
 State 29
 
-   29 expr: ident TEQUAL . expr
+   30 expr: ident TEQUAL . expr
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -556,7 +559,7 @@ State 29
 
 State 30
 
-   30 expr: ident TLPAREN . call_args TRPAREN
+   31 expr: ident TLPAREN . call_args TRPAREN
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -564,7 +567,7 @@ State 30
     TSLITERAL    shift, and go to state 4
     TLPAREN      shift, and go to state 9
 
-    $default  reduce using rule 36 (call_args)
+    $default  reduce using rule 37 (call_args)
 
     ident           go to state 25
     string_literal  go to state 18
@@ -585,77 +588,77 @@ State 31
 
 State 32
 
-   39 comparison: TCEQ .
-
-    $default  reduce using rule 39 (comparison)
-
-
-State 33
-
-   40 comparison: TCNE .
+   40 comparison: TCEQ .
 
     $default  reduce using rule 40 (comparison)
 
 
-State 34
+State 33
 
-   41 comparison: TCLT .
+   41 comparison: TCNE .
 
     $default  reduce using rule 41 (comparison)
 
 
-State 35
+State 34
 
-   42 comparison: TCLE .
+   42 comparison: TCLT .
 
     $default  reduce using rule 42 (comparison)
 
 
-State 36
+State 35
 
-   43 comparison: TCGT .
+   43 comparison: TCLE .
 
     $default  reduce using rule 43 (comparison)
 
 
-State 37
+State 36
 
-   44 comparison: TCGE .
+   44 comparison: TCGT .
 
     $default  reduce using rule 44 (comparison)
 
 
-State 38
+State 37
 
-   45 comparison: TPLUS .
+   45 comparison: TCGE .
 
     $default  reduce using rule 45 (comparison)
 
 
-State 39
+State 38
 
-   46 comparison: TMINUS .
+   46 comparison: TPLUS .
 
     $default  reduce using rule 46 (comparison)
 
 
-State 40
+State 39
 
-   47 comparison: TMUL .
+   47 comparison: TMINUS .
 
     $default  reduce using rule 47 (comparison)
 
 
-State 41
+State 40
 
-   48 comparison: TDIV .
+   48 comparison: TMUL .
 
     $default  reduce using rule 48 (comparison)
 
 
+State 41
+
+   49 comparison: TDIV .
+
+    $default  reduce using rule 49 (comparison)
+
+
 State 42
 
-   34 expr: expr comparison . expr
+   35 expr: expr comparison . expr
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -672,7 +675,7 @@ State 42
 State 43
 
     3 stmts: stmts . stmt
-   15 class_decl: TCLSKW ident stmts . TENDKW
+   16 class_decl: TCLSKW ident stmts . TENDKW
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -698,7 +701,7 @@ State 43
 
 State 44
 
-   20 func_decl: TFCTNKW ident TASKW . ident block
+   21 func_decl: TFCTNKW ident TASKW . ident block
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -707,9 +710,9 @@ State 44
 
 State 45
 
-   19 func_decl: TFCTNKW ident TLPAREN . func_decl_args TRPAREN block
-   21          | TFCTNKW ident TLPAREN . func_decl_args TRPAREN TASKW ident block
-   35 expr: TLPAREN . expr TRPAREN
+   20 func_decl: TFCTNKW ident TLPAREN . func_decl_args TRPAREN block
+   22          | TFCTNKW ident TLPAREN . func_decl_args TRPAREN TASKW ident block
+   36 expr: TLPAREN . expr TRPAREN
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -717,7 +720,7 @@ State 45
     TSLITERAL    shift, and go to state 4
     TLPAREN      shift, and go to state 9
 
-    $default  reduce using rule 22 (func_decl_args)
+    $default  reduce using rule 23 (func_decl_args)
 
     var_decl        go to state 59
     func_decl_args  go to state 60
@@ -784,15 +787,16 @@ State 47
 
 State 48
 
-   18 func_decl: TFCTNKW ident block .
+   19 func_decl: TFCTNKW ident block .
 
-    $default  reduce using rule 18 (func_decl)
+    $default  reduce using rule 19 (func_decl)
 
 
 State 49
 
    14 if_stmt: TIFKW TLPAREN expr . TRPAREN stmts TENDKW
-   34 expr: expr . comparison expr
+   15        | TIFKW TLPAREN expr . TRPAREN stmts TELSEKW stmts TENDKW
+   35 expr: expr . comparison expr
 
     TCEQ     shift, and go to state 32
     TCNE     shift, and go to state 33
@@ -811,11 +815,11 @@ State 49
 
 State 50
 
-   17 func_decl: TPROTOKW ident TLPAREN . func_decl_args TRPAREN TASKW ident
+   18 func_decl: TPROTOKW ident TLPAREN . func_decl_args TRPAREN TASKW ident
 
     TIDENTIFIER  shift, and go to state 1
 
-    $default  reduce using rule 22 (func_decl_args)
+    $default  reduce using rule 23 (func_decl_args)
 
     var_decl        go to state 59
     func_decl_args  go to state 65
@@ -824,15 +828,15 @@ State 50
 
 State 51
 
-   35 expr: TLPAREN expr TRPAREN .
+   36 expr: TLPAREN expr TRPAREN .
 
-    $default  reduce using rule 35 (expr)
+    $default  reduce using rule 36 (expr)
 
 
 State 52
 
-   29 expr: ident TEQUAL expr .
-   34     | expr . comparison expr
+   30 expr: ident TEQUAL expr .
+   35     | expr . comparison expr
 
     TCEQ    shift, and go to state 32
     TCNE    shift, and go to state 33
@@ -845,25 +849,25 @@ State 52
     TMUL    shift, and go to state 40
     TDIV    shift, and go to state 41
 
-    TCEQ      [reduce using rule 29 (expr)]
-    TCNE      [reduce using rule 29 (expr)]
-    TCLT      [reduce using rule 29 (expr)]
-    TCLE      [reduce using rule 29 (expr)]
-    TCGT      [reduce using rule 29 (expr)]
-    TCGE      [reduce using rule 29 (expr)]
-    TPLUS     [reduce using rule 29 (expr)]
-    TMINUS    [reduce using rule 29 (expr)]
-    TMUL      [reduce using rule 29 (expr)]
-    TDIV      [reduce using rule 29 (expr)]
-    $default  reduce using rule 29 (expr)
+    TCEQ      [reduce using rule 30 (expr)]
+    TCNE      [reduce using rule 30 (expr)]
+    TCLT      [reduce using rule 30 (expr)]
+    TCLE      [reduce using rule 30 (expr)]
+    TCGT      [reduce using rule 30 (expr)]
+    TCGE      [reduce using rule 30 (expr)]
+    TPLUS     [reduce using rule 30 (expr)]
+    TMINUS    [reduce using rule 30 (expr)]
+    TMUL      [reduce using rule 30 (expr)]
+    TDIV      [reduce using rule 30 (expr)]
+    $default  reduce using rule 30 (expr)
 
     comparison  go to state 42
 
 
 State 53
 
-   34 expr: expr . comparison expr
-   37 call_args: expr .
+   35 expr: expr . comparison expr
+   38 call_args: expr .
 
     TCEQ    shift, and go to state 32
     TCNE    shift, and go to state 33
@@ -876,15 +880,15 @@ State 53
     TMUL    shift, and go to state 40
     TDIV    shift, and go to state 41
 
-    $default  reduce using rule 37 (call_args)
+    $default  reduce using rule 38 (call_args)
 
     comparison  go to state 42
 
 
 State 54
 
-   30 expr: ident TLPAREN call_args . TRPAREN
-   38 call_args: call_args . TCOMMA expr
+   31 expr: ident TLPAREN call_args . TRPAREN
+   39 call_args: call_args . TCOMMA expr
 
     TRPAREN  shift, and go to state 67
     TCOMMA   shift, and go to state 68
@@ -908,8 +912,8 @@ State 55
 
 State 56
 
-   34 expr: expr . comparison expr
-   34     | expr comparison expr .
+   35 expr: expr . comparison expr
+   35     | expr comparison expr .
 
     TCEQ    shift, and go to state 32
     TCNE    shift, and go to state 33
@@ -922,31 +926,31 @@ State 56
     TMUL    shift, and go to state 40
     TDIV    shift, and go to state 41
 
-    TCEQ      [reduce using rule 34 (expr)]
-    TCNE      [reduce using rule 34 (expr)]
-    TCLT      [reduce using rule 34 (expr)]
-    TCLE      [reduce using rule 34 (expr)]
-    TCGT      [reduce using rule 34 (expr)]
-    TCGE      [reduce using rule 34 (expr)]
-    TPLUS     [reduce using rule 34 (expr)]
-    TMINUS    [reduce using rule 34 (expr)]
-    TMUL      [reduce using rule 34 (expr)]
-    TDIV      [reduce using rule 34 (expr)]
-    $default  reduce using rule 34 (expr)
+    TCEQ      [reduce using rule 35 (expr)]
+    TCNE      [reduce using rule 35 (expr)]
+    TCLT      [reduce using rule 35 (expr)]
+    TCLE      [reduce using rule 35 (expr)]
+    TCGT      [reduce using rule 35 (expr)]
+    TCGE      [reduce using rule 35 (expr)]
+    TPLUS     [reduce using rule 35 (expr)]
+    TMINUS    [reduce using rule 35 (expr)]
+    TMUL      [reduce using rule 35 (expr)]
+    TDIV      [reduce using rule 35 (expr)]
+    $default  reduce using rule 35 (expr)
 
     comparison  go to state 42
 
 
 State 57
 
-   15 class_decl: TCLSKW ident stmts TENDKW .
+   16 class_decl: TCLSKW ident stmts TENDKW .
 
-    $default  reduce using rule 15 (class_decl)
+    $default  reduce using rule 16 (class_decl)
 
 
 State 58
 
-   20 func_decl: TFCTNKW ident TASKW ident . block
+   21 func_decl: TFCTNKW ident TASKW ident . block
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -974,16 +978,16 @@ State 58
 
 State 59
 
-   23 func_decl_args: var_decl .
+   24 func_decl_args: var_decl .
 
-    $default  reduce using rule 23 (func_decl_args)
+    $default  reduce using rule 24 (func_decl_args)
 
 
 State 60
 
-   19 func_decl: TFCTNKW ident TLPAREN func_decl_args . TRPAREN block
-   21          | TFCTNKW ident TLPAREN func_decl_args . TRPAREN TASKW ident block
-   24 func_decl_args: func_decl_args . TCOMMA var_decl
+   20 func_decl: TFCTNKW ident TLPAREN func_decl_args . TRPAREN block
+   22          | TFCTNKW ident TLPAREN func_decl_args . TRPAREN TASKW ident block
+   25 func_decl_args: func_decl_args . TCOMMA var_decl
 
     TRPAREN  shift, and go to state 71
     TCOMMA   shift, and go to state 72
@@ -1033,6 +1037,7 @@ State 63
 State 64
 
    14 if_stmt: TIFKW TLPAREN expr TRPAREN . stmts TENDKW
+   15        | TIFKW TLPAREN expr TRPAREN . stmts TELSEKW stmts TENDKW
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -1058,8 +1063,8 @@ State 64
 
 State 65
 
-   17 func_decl: TPROTOKW ident TLPAREN func_decl_args . TRPAREN TASKW ident
-   24 func_decl_args: func_decl_args . TCOMMA var_decl
+   18 func_decl: TPROTOKW ident TLPAREN func_decl_args . TRPAREN TASKW ident
+   25 func_decl_args: func_decl_args . TCOMMA var_decl
 
     TRPAREN  shift, and go to state 75
     TCOMMA   shift, and go to state 72
@@ -1077,14 +1082,14 @@ State 66
 
 State 67
 
-   30 expr: ident TLPAREN call_args TRPAREN .
+   31 expr: ident TLPAREN call_args TRPAREN .
 
-    $default  reduce using rule 30 (expr)
+    $default  reduce using rule 31 (expr)
 
 
 State 68
 
-   38 call_args: call_args TCOMMA . expr
+   39 call_args: call_args TCOMMA . expr
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -1101,7 +1106,7 @@ State 68
 State 69
 
    13 var_decl: ident ident TEQUAL expr .
-   34 expr: expr . comparison expr
+   35 expr: expr . comparison expr
 
     TCEQ    shift, and go to state 32
     TCNE    shift, and go to state 33
@@ -1121,15 +1126,15 @@ State 69
 
 State 70
 
-   20 func_decl: TFCTNKW ident TASKW ident block .
+   21 func_decl: TFCTNKW ident TASKW ident block .
 
-    $default  reduce using rule 20 (func_decl)
+    $default  reduce using rule 21 (func_decl)
 
 
 State 71
 
-   19 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN . block
-   21          | TFCTNKW ident TLPAREN func_decl_args TRPAREN . TASKW ident block
+   20 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN . block
+   22          | TFCTNKW ident TLPAREN func_decl_args TRPAREN . TASKW ident block
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -1158,7 +1163,7 @@ State 71
 
 State 72
 
-   24 func_decl_args: func_decl_args TCOMMA . var_decl
+   25 func_decl_args: func_decl_args TCOMMA . var_decl
 
     TIDENTIFIER  shift, and go to state 1
 
@@ -1177,13 +1182,15 @@ State 74
 
     3 stmts: stmts . stmt
    14 if_stmt: TIFKW TLPAREN expr TRPAREN stmts . TENDKW
+   15        | TIFKW TLPAREN expr TRPAREN stmts . TELSEKW stmts TENDKW
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
     TDOUBLE      shift, and go to state 3
     TSLITERAL    shift, and go to state 4
     TCLSKW       shift, and go to state 5
-    TENDKW       shift, and go to state 80
+    TELSEKW      shift, and go to state 80
+    TENDKW       shift, and go to state 81
     TFCTNKW      shift, and go to state 6
     TIFKW        shift, and go to state 7
     TPROTOKW     shift, and go to state 8
@@ -1202,15 +1209,15 @@ State 74
 
 State 75
 
-   17 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN . TASKW ident
+   18 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN . TASKW ident
 
-    TASKW  shift, and go to state 81
+    TASKW  shift, and go to state 82
 
 
 State 76
 
-   34 expr: expr . comparison expr
-   38 call_args: call_args TCOMMA expr .
+   35 expr: expr . comparison expr
+   39 call_args: call_args TCOMMA expr .
 
     TCEQ    shift, and go to state 32
     TCNE    shift, and go to state 33
@@ -1223,53 +1230,79 @@ State 76
     TMUL    shift, and go to state 40
     TDIV    shift, and go to state 41
 
-    $default  reduce using rule 38 (call_args)
+    $default  reduce using rule 39 (call_args)
 
     comparison  go to state 42
 
 
 State 77
 
-   21 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW . ident block
-
-    TIDENTIFIER  shift, and go to state 1
-
-    ident  go to state 82
-
-
-State 78
-
-   19 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN block .
-
-    $default  reduce using rule 19 (func_decl)
-
-
-State 79
-
-   24 func_decl_args: func_decl_args TCOMMA var_decl .
-
-    $default  reduce using rule 24 (func_decl_args)
-
-
-State 80
-
-   14 if_stmt: TIFKW TLPAREN expr TRPAREN stmts TENDKW .
-
-    $default  reduce using rule 14 (if_stmt)
-
-
-State 81
-
-   17 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW . ident
+   22 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW . ident block
 
     TIDENTIFIER  shift, and go to state 1
 
     ident  go to state 83
 
 
+State 78
+
+   20 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN block .
+
+    $default  reduce using rule 20 (func_decl)
+
+
+State 79
+
+   25 func_decl_args: func_decl_args TCOMMA var_decl .
+
+    $default  reduce using rule 25 (func_decl_args)
+
+
+State 80
+
+   15 if_stmt: TIFKW TLPAREN expr TRPAREN stmts TELSEKW . stmts TENDKW
+
+    TIDENTIFIER  shift, and go to state 1
+    TINTEGER     shift, and go to state 2
+    TDOUBLE      shift, and go to state 3
+    TSLITERAL    shift, and go to state 4
+    TCLSKW       shift, and go to state 5
+    TFCTNKW      shift, and go to state 6
+    TIFKW        shift, and go to state 7
+    TPROTOKW     shift, and go to state 8
+    TLPAREN      shift, and go to state 9
+
+    stmts           go to state 84
+    stmt            go to state 12
+    var_decl        go to state 13
+    if_stmt         go to state 14
+    class_decl      go to state 15
+    func_decl       go to state 16
+    ident           go to state 17
+    string_literal  go to state 18
+    numeric         go to state 19
+    expr            go to state 20
+
+
+State 81
+
+   14 if_stmt: TIFKW TLPAREN expr TRPAREN stmts TENDKW .
+
+    $default  reduce using rule 14 (if_stmt)
+
+
 State 82
 
-   21 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident . block
+   18 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW . ident
+
+    TIDENTIFIER  shift, and go to state 1
+
+    ident  go to state 85
+
+
+State 83
+
+   22 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident . block
 
     TIDENTIFIER  shift, and go to state 1
     TINTEGER     shift, and go to state 2
@@ -1284,7 +1317,7 @@ State 82
 
     stmts           go to state 47
     stmt            go to state 12
-    block           go to state 84
+    block           go to state 86
     var_decl        go to state 13
     if_stmt         go to state 14
     class_decl      go to state 15
@@ -1295,15 +1328,49 @@ State 82
     expr            go to state 20
 
 
-State 83
-
-   17 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident .
-
-    $default  reduce using rule 17 (func_decl)
-
-
 State 84
 
-   21 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block .
+    3 stmts: stmts . stmt
+   15 if_stmt: TIFKW TLPAREN expr TRPAREN stmts TELSEKW stmts . TENDKW
 
-    $default  reduce using rule 21 (func_decl)
+    TIDENTIFIER  shift, and go to state 1
+    TINTEGER     shift, and go to state 2
+    TDOUBLE      shift, and go to state 3
+    TSLITERAL    shift, and go to state 4
+    TCLSKW       shift, and go to state 5
+    TENDKW       shift, and go to state 87
+    TFCTNKW      shift, and go to state 6
+    TIFKW        shift, and go to state 7
+    TPROTOKW     shift, and go to state 8
+    TLPAREN      shift, and go to state 9
+
+    stmt            go to state 28
+    var_decl        go to state 13
+    if_stmt         go to state 14
+    class_decl      go to state 15
+    func_decl       go to state 16
+    ident           go to state 17
+    string_literal  go to state 18
+    numeric         go to state 19
+    expr            go to state 20
+
+
+State 85
+
+   18 func_decl: TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident .
+
+    $default  reduce using rule 18 (func_decl)
+
+
+State 86
+
+   22 func_decl: TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block .
+
+    $default  reduce using rule 22 (func_decl)
+
+
+State 87
+
+   15 if_stmt: TIFKW TLPAREN expr TRPAREN stmts TELSEKW stmts TENDKW .
+
+    $default  reduce using rule 15 (if_stmt)

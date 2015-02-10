@@ -93,7 +93,12 @@ if_stmt
 	$$ = new IfNode($3, $5->statements, nullptr);  //expr, stmts, els);
 	delete $5;
 }
-
+| TIFKW TLPAREN expr TRPAREN stmts TELSEKW stmts TENDKW {
+	$$ = new IfNode($3, $5->statements, new ElseNode(
+		$7->statements));
+	delete $5;
+}
+;
 class_decl
 : TCLSKW ident stmts TENDKW {
 	$$ = new NClass($2->name,$3->statements);

@@ -7,7 +7,7 @@ Value* NClass::codeGen(ICompilerEngine* ctxt)
   // Push this so that variable declarations can check to see
   // if they are declared inside this class
   ctxt->PushClass(this);
-  std::vector<Type*> elements({Type::getInt32Ty(getGlobalContext()), Type::getInt64Ty(getGlobalContext())});
+  //std::vector<Type*> elements({Type::getInt32Ty(getGlobalContext()), Type::getInt64Ty(getGlobalContext())});
   // Create the llvm struct type and then add it to the engines pool of classes
   for(auto stmt : statements)
   {
