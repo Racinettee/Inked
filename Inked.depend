@@ -55,7 +55,7 @@
 	"parser.parser.hh"
 	<unistd.h>
 
-1422604446 source:/home/steve/Documents/Inked/main.cpp
+1424058680 source:/home/steve/Documents/Inked/main.cpp
 	<iostream>
 	"CompilerEngine.hpp"
 	"node.h"
@@ -79,7 +79,7 @@
 	<llvm/ExecutionEngine/JIT.h>
 	<llvm/Support/raw_ostream.h>
 
-1423170707 /home/steve/Documents/Inked/node.h
+1424403206 /home/steve/Documents/Inked/node.h
 	<iostream>
 	<vector>
 	<llvm/IR/Value.h>
@@ -87,23 +87,24 @@
 	"ClassNode.hpp"
 	"FunctionNode.hpp"
 	"IfNode.hpp"
+	"NewNode.hpp"
 
-1423556718 source:/home/steve/Documents/Inked/parser.y
+1424402144 source:/home/steve/Documents/Inked/parser.y
 	"node.h"
 
-1422914038 source:/home/steve/Documents/Inked/tokens.l
+1424401783 source:/home/steve/Documents/Inked/tokens.l
 	<string>
 	"node.h"
 	"parser.parser.hh"
 
-1423556743 /home/steve/Documents/Inked/parser.parser.hh
+1424404058 /home/steve/Documents/Inked/parser.parser.hh
 
-1423259295 source:/home/steve/Documents/Inked/codegen.cpp
+1424058680 source:/home/steve/Documents/Inked/codegen.cpp
 	"node.h"
 	"ICompilerEngine.hpp"
 	"parser.parser.hh"
 
-1423263660 /home/steve/Documents/Inked/ICompilerEngine.hpp
+1424423588 /home/steve/Documents/Inked/ICompilerEngine.hpp
 	<llvm/IR/Module.h>
 	<llvm/IR/Function.h>
 	<llvm/IR/Type.h>
@@ -113,8 +114,6 @@
 	<llvm/IR/Instructions.h>
 	<llvm/IR/CallingConv.h>
 	<llvm/Bitcode/ReaderWriter.h>
-	<llvm/Analysis/Verifier.h>
-	<llvm/Assembly/PrintModulePass.h>
 	<llvm/IR/IRBuilder.h>
 	<llvm/Support/TargetSelect.h>
 	<llvm/ExecutionEngine/GenericValue.h>
@@ -124,45 +123,51 @@
 	<map>
 	<string>
 
-1423265705 source:/home/steve/Documents/Inked/CompilerEngine.cpp
+1424058680 source:/home/steve/Documents/Inked/CompilerEngine.cpp
 	"node.h"
 	"CompilerEngine.hpp"
 	"parser.parser.hh"
 
-1423263678 /home/steve/Documents/Inked/CompilerEngine.hpp
+1424423614 /home/steve/Documents/Inked/CompilerEngine.hpp
 	<stack>
 	"ICompilerEngine.hpp"
 
-1422064434 /home/steve/Documents/Inked/VariableNodes.hpp
+1424058680 /home/steve/Documents/Inked/VariableNodes.hpp
 
-1422608056 /home/steve/Documents/Inked/ClassNode.hpp
+1424058680 /home/steve/Documents/Inked/ClassNode.hpp
 	"ICompilerEngine.hpp"
 	"IClass.hpp"
 	"node.h"
 	<utility>
 
-1422671780 /home/steve/Documents/Inked/FunctionNode.hpp
+1424058680 /home/steve/Documents/Inked/FunctionNode.hpp
 
-1422912413 /home/steve/Documents/Inked/IClass.hpp
+1424058680 /home/steve/Documents/Inked/IClass.hpp
 	<string>
 
-1423205855 source:/home/steve/Documents/Inked/FunctionCodeGen.cpp
+1424058680 source:/home/steve/Documents/Inked/FunctionCodeGen.cpp
 	"node.h"
 	"ICompilerEngine.hpp"
 	"parser.parser.hh"
 
-1423281267 source:/home/steve/Documents/Inked/ClassNode.cpp
+1424058680 source:/home/steve/Documents/Inked/ClassNode.cpp
 	"ICompilerEngine.hpp"
 	"ClassNode.hpp"
 
-1423375244 source:/home/steve/Documents/Inked/VariableCodeGen.cpp
+1424058680 source:/home/steve/Documents/Inked/VariableCodeGen.cpp
 	"ICompilerEngine.hpp"
 	"node.h"
 	"VariableNodes.hpp"
 
-1423103487 /home/steve/Documents/Inked/IfNode.hpp
+1424058680 /home/steve/Documents/Inked/IfNode.hpp
 	"node.h"
 
-1423555923 source:/home/steve/Documents/Inked/IfNode.cpp
+1424058680 source:/home/steve/Documents/Inked/IfNode.cpp
 	"IfNode.hpp"
+
+1424404842 /home/steve/Documents/Inked/NewNode.hpp
+	"node.h"
+
+1424403270 source:/home/steve/Documents/Inked/NewNode.cpp
+	"NewNode.hpp"
 

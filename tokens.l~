@@ -25,7 +25,6 @@ if                      return TOKEN(TIFKW);
 proto										return TOKEN(TPROTOKW);
 unless                  return TOKEN(TUNLKW);
 while                   return TOKEN(TWHLKW);
-new							return TOKEN(TNEWKW);
 
 \"(\\.|[^"])*\"         {SAVE_TOKEN;return  TSLITERAL;}
 

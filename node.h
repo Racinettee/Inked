@@ -94,5 +94,6 @@ public:
 #include "ClassNode.hpp"
 #include "FunctionNode.hpp"
 #include "IfNode.hpp"
+#include "NewNode.hpp"
 
 #endif // INKED_AST_NODE_H

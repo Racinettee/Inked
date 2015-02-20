@@ -9,10 +9,12 @@ CompilerEngine* CompilerEngine::inst;
 
 CompilerEngine::CompilerEngine():
   ICompilerEngine(getGlobalContext()),
-  main_module(new Module("main", getGlobalContext()))
+  main_module(new Module("main", getGlobalContext())),
+  dat_layout(main_module)
 {
   if(inst!=nullptr)
     throw;
+  type_table["char"] = Type::getInt8Ty(getGlobalContext());
   type_table["void"] = Type::getVoidTy(getGlobalContext());
   type_table["int"] = Type::getInt32Ty(getGlobalContext());
   type_table["long"]= Type::getInt64Ty(getGlobalContext());
@@ -21,7 +23,30 @@ CompilerEngine::CompilerEngine():
   type_table["cstring"]=Type::getInt8PtrTy(getGlobalContext());
   puts("Basic types registered");
 }
-  // May also push or pop current context in implementations
+size_t CompilerEngine::SizeOfType(const std::string& ty)
+{
+    auto type = TypeOf(ty);
+    // figure out the type of type of type. if its primitive just return the size, if its a struct type
+    // then it will have to be interated over
+    size_t sizeof_type = 0;
+    if(type->isFloatTy())
+        sizeof_type = 4;
+
+    else if(type->isDoubleTy())
+        sizeof_type = 8;
+
+    else if(type->isIntegerTy())
+      sizeof_type = static_cast<llvm::IntegerType*>(type)->getBitWidth();
+
+    else if(type->isStructTy())
+    {
+        // iterate over all elements and sum them
+
+    }
+    return sizeof_type;
+}
+DataLayout* CompilerEngine::GetDatLayout() { return &dat_layout; }
+// May also push or pop current context in implementations
 void CompilerEngine::PushFunction(Function* f)
 {
   function_stak.push(f);
@@ -112,6 +137,19 @@ void CompilerEngine::PopBlock()
 }
 void CompilerEngine::StartGen(NBlock* root)
 {
+  // Define some functions to use from cstdlib
+  llvm::FunctionType* mallocType = FunctionType::get(Type::getInt8PtrTy(getGlobalContext()),
+  {
+      Type::getInt64Ty(getGlobalContext())
+  }, false);
+  Function::Create(mallocType, GlobalValue::ExternalLinkage, "malloc", current_module);
+  llvm::FunctionType* putsType = FunctionType::get(Type::getInt32Ty(getGlobalContext()),
+  {
+    Type::getInt8PtrTy(getGlobalContext())
+  }, false);
+  Function::Create(putsType, GlobalValue::ExternalLinkage, "puts", current_module);
+  Function::Create(putsType, GlobalValue::ExternalLinkage, "printf", current_module);
+
   vector<Type*> argTypes;
 	FunctionType* ftype =
     FunctionType::get(
@@ -123,6 +161,7 @@ void CompilerEngine::StartGen(NBlock* root)
   current_module = main_module;
 	BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", main_function, 0);
 	puts("Main function created. Generating code...");
+
 	this->PushFunction(main_function);
 	this->PushBlock(bblock);
 

@@ -9,8 +9,6 @@
 #include <llvm/IR/Instructions.h>
 #include <llvm/IR/CallingConv.h>
 #include <llvm/Bitcode/ReaderWriter.h>
-#include <llvm/Analysis/Verifier.h>
-#include <llvm/Assembly/PrintModulePass.h>
 #include <llvm/IR/IRBuilder.h>
 #include <llvm/Support/TargetSelect.h>
 #include <llvm/ExecutionEngine/GenericValue.h>
@@ -45,18 +43,19 @@ public:
 
   virtual Function*         CurrentFunction() = 0;
   // --------------------------------------------
+  virtual DataLayout*       GetDatLayout() = 0;
   // May also push or pop current context in implementations
-  virtual void PushFunction(Function*) = 0;
-  virtual void PopFunction() = 0;
+  virtual void              PushFunction(Function*) = 0;
+  virtual void              PopFunction() = 0;
 
   virtual BasicBlock*       CurrentBBlock  () = 0;
   virtual Module*           CurrentModule  () = 0;
   virtual ValueSymbolTable* CurrentValSymTable () = 0;
 
-  virtual void PushBlock (BasicBlock* bb) = 0;
-  virtual void PopBlock () = 0;
-  virtual void StartGen (NBlock* root) = 0;
-  virtual GenericValue Test () = 0;
+  virtual void              PushBlock (BasicBlock* bb) = 0;
+  virtual void              PopBlock () = 0;
+  virtual void              StartGen (NBlock* root) = 0;
+  virtual GenericValue      Test () = 0;
 
   // A node, or client can use this to figure out
   // if its being parsed inside of a class or a function
@@ -72,6 +71,8 @@ public:
   virtual void AddType(const std::string&, llvm::Type*) = 0;
   // --------------------------
   virtual void PrintStacks() = 0;
+  // -----------------------------
+  virtual size_t SizeOfType(const std::string&) = 0;
 
   virtual ~ICompilerEngine(){ }
 };

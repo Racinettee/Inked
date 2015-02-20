@@ -66,25 +66,26 @@ extern int yydebug;
     TWHLKW = 276,
     TASKW = 277,
     TPROTOKW = 278,
-    TQUOTE = 279,
-    TSQUOTE = 280,
-    TCEQ = 281,
-    TCNE = 282,
-    TCLT = 283,
-    TCLE = 284,
-    TCGT = 285,
-    TCGE = 286,
-    TEQUAL = 287,
-    TLPAREN = 288,
-    TRPAREN = 289,
-    TLBRACE = 290,
-    TRBRACE = 291,
-    TCOMMA = 292,
-    TDOT = 293,
-    TPLUS = 294,
-    TMINUS = 295,
-    TMUL = 296,
-    TDIV = 297
+    TNEWKW = 279,
+    TQUOTE = 280,
+    TSQUOTE = 281,
+    TCEQ = 282,
+    TCNE = 283,
+    TCLT = 284,
+    TCLE = 285,
+    TCGT = 286,
+    TCGE = 287,
+    TEQUAL = 288,
+    TLPAREN = 289,
+    TRPAREN = 290,
+    TLBRACE = 291,
+    TRBRACE = 292,
+    TCOMMA = 293,
+    TDOT = 294,
+    TPLUS = 295,
+    TMINUS = 296,
+    TMUL = 297,
+    TDIV = 298
   };
 #endif
 
@@ -107,7 +108,7 @@ union YYSTYPE
   std::string *string;
   int token;
 
-#line 111 "/home/steve/Documents/Inked/parser.parser.hh" /* yacc.c:1909  */
+#line 112 "/home/steve/Documents/Inked/parser.parser.hh" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

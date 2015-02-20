@@ -35,7 +35,11 @@
 			<Add option="-D__STDC_CONSTANT_MACROS" />
 		</Compiler>
 		<Linker>
-			<Add option="`llvm-config --libs  jit native core --ldflags`" />
+			<Add option="`llvm-config --libs  jit native core engine --ldflags`" />
+			<Add option="-lz" />
+			<Add option="-ldl" />
+			<Add option="-lpthread" />
+			<Add option="-ltinfo" />
 		</Linker>
 		<Unit filename="ClassNode.cpp" />
 		<Unit filename="ClassNode.hpp" />

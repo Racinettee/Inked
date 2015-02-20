@@ -11,12 +11,14 @@ public:
   static CompilerEngine* inst;
   CompilerEngine();
 
+  DataLayout*       GetDatLayout();
+
   Type*             TypeOf(const std::string&);
 
   Function*         CurrentFunction();
   // -----------------------
-  void PushFunction(Function*);
-  void PopFunction();
+  void              PushFunction(Function*);
+  void              PopFunction();
   // -------------------
   BasicBlock*       CurrentBBlock();
   Module*           CurrentModule();
@@ -39,6 +41,7 @@ public:
   void AddType(const std::string&, llvm::Type*);
   // ---------------------
   void PrintStacks();
+  size_t SizeOfType(const std::string&);
 private:
   std::stack<IClass*> class_stak;
   std::stack<Function*> function_stak;
@@ -47,9 +50,10 @@ private:
   std::stack<Ctxt> ctxt_stak;
   // ---------------------------------
   //Function*               current_function;
-  Module*                 main_module;
-  Module*                 current_module;
-  ValueSymbolTable*       current_lookup;
-  Function*               main_function;
+  Module*               main_module;
+  Module*               current_module;
+  ValueSymbolTable*     current_lookup;
+  Function*             main_function;
+  DataLayout            dat_layout;
 };
 #endif // _COMPILER_ENGINE_CONTEXT_HPP_
