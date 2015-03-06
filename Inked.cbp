@@ -51,6 +51,9 @@
 		<Unit filename="ICompilerEngine.hpp" />
 		<Unit filename="IfNode.cpp" />
 		<Unit filename="IfNode.hpp" />
+		<Unit filename="InheritanceNode.hpp" />
+		<Unit filename="NewNode.cpp" />
+		<Unit filename="NewNode.hpp" />
 		<Unit filename="VariableCodeGen.cpp" />
 		<Unit filename="VariableNodes.hpp" />
 		<Unit filename="codegen.cpp" />

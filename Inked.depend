@@ -79,7 +79,7 @@
 	<llvm/ExecutionEngine/JIT.h>
 	<llvm/Support/raw_ostream.h>
 
-1424403206 /home/steve/Documents/Inked/node.h
+1425367756 /home/steve/Documents/Inked/node.h
 	<iostream>
 	<vector>
 	<llvm/IR/Value.h>
@@ -89,7 +89,7 @@
 	"IfNode.hpp"
 	"NewNode.hpp"
 
-1424402144 source:/home/steve/Documents/Inked/parser.y
+1424474808 source:/home/steve/Documents/Inked/parser.y
 	"node.h"
 
 1424401783 source:/home/steve/Documents/Inked/tokens.l
@@ -97,14 +97,14 @@
 	"node.h"
 	"parser.parser.hh"
 
-1424404058 /home/steve/Documents/Inked/parser.parser.hh
+1425605693 /home/steve/Documents/Inked/parser.parser.hh
 
 1424058680 source:/home/steve/Documents/Inked/codegen.cpp
 	"node.h"
 	"ICompilerEngine.hpp"
 	"parser.parser.hh"
 
-1424423588 /home/steve/Documents/Inked/ICompilerEngine.hpp
+1425364777 /home/steve/Documents/Inked/ICompilerEngine.hpp
 	<llvm/IR/Module.h>
 	<llvm/IR/Function.h>
 	<llvm/IR/Type.h>
@@ -123,24 +123,24 @@
 	<map>
 	<string>
 
-1424058680 source:/home/steve/Documents/Inked/CompilerEngine.cpp
+1425370911 source:/home/steve/Documents/Inked/CompilerEngine.cpp
 	"node.h"
 	"CompilerEngine.hpp"
 	"parser.parser.hh"
 
-1424423614 /home/steve/Documents/Inked/CompilerEngine.hpp
+1425370665 /home/steve/Documents/Inked/CompilerEngine.hpp
 	<stack>
 	"ICompilerEngine.hpp"
 
 1424058680 /home/steve/Documents/Inked/VariableNodes.hpp
 
-1424058680 /home/steve/Documents/Inked/ClassNode.hpp
+1425606388 /home/steve/Documents/Inked/ClassNode.hpp
 	"ICompilerEngine.hpp"
 	"IClass.hpp"
 	"node.h"
 	<utility>
 
-1424058680 /home/steve/Documents/Inked/FunctionNode.hpp
+1424474525 /home/steve/Documents/Inked/FunctionNode.hpp
 
 1424058680 /home/steve/Documents/Inked/IClass.hpp
 	<string>
@@ -165,9 +165,10 @@
 1424058680 source:/home/steve/Documents/Inked/IfNode.cpp
 	"IfNode.hpp"
 
-1424404842 /home/steve/Documents/Inked/NewNode.hpp
+1425361971 /home/steve/Documents/Inked/NewNode.hpp
 	"node.h"
 
-1424403270 source:/home/steve/Documents/Inked/NewNode.cpp
+1425601631 source:/home/steve/Documents/Inked/NewNode.cpp
 	"NewNode.hpp"
+	"FunctionNode.hpp"
 

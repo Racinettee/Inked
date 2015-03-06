@@ -36,7 +36,7 @@ size_t CompilerEngine::SizeOfType(const std::string& ty)
         sizeof_type = 8;
 
     else if(type->isIntegerTy())
-      sizeof_type = static_cast<llvm::IntegerType*>(type)->getBitWidth();
+      sizeof_type = static_cast<llvm::IntegerType*>(type)->getBitWidth()/8;
 
     else if(type->isStructTy())
     {
@@ -137,19 +137,6 @@ void CompilerEngine::PopBlock()
 }
 void CompilerEngine::StartGen(NBlock* root)
 {
-  // Define some functions to use from cstdlib
-  llvm::FunctionType* mallocType = FunctionType::get(Type::getInt8PtrTy(getGlobalContext()),
-  {
-      Type::getInt64Ty(getGlobalContext())
-  }, false);
-  Function::Create(mallocType, GlobalValue::ExternalLinkage, "malloc", current_module);
-  llvm::FunctionType* putsType = FunctionType::get(Type::getInt32Ty(getGlobalContext()),
-  {
-    Type::getInt8PtrTy(getGlobalContext())
-  }, false);
-  Function::Create(putsType, GlobalValue::ExternalLinkage, "puts", current_module);
-  Function::Create(putsType, GlobalValue::ExternalLinkage, "printf", current_module);
-
   vector<Type*> argTypes;
 	FunctionType* ftype =
     FunctionType::get(
@@ -159,6 +146,7 @@ void CompilerEngine::StartGen(NBlock* root)
     );
   main_function = Function::Create(ftype, GlobalValue::InternalLinkage, "main", main_module);
   current_module = main_module;
+    add_c_std_fnct();
 	BasicBlock *bblock = BasicBlock::Create(getGlobalContext(), "entry", main_function, 0);
 	puts("Main function created. Generating code...");
 
@@ -221,4 +209,31 @@ void CompilerEngine::PrintStacks()
     cout << "   " << (int)ctxt_stak.top();
     ctxt_stak.pop();
   }
+}
+void CompilerEngine::add_c_std_fnct()
+{
+    auto int8ptrty = TypeOf("char")->getPointerTo();
+    auto int32ty = TypeOf("int");
+    auto voidty = TypeOf("void");
+    // Define some functions to use from cstdlib
+  llvm::FunctionType* mallocType = FunctionType::get(int8ptrty,
+  {
+      Type::getInt64Ty(getGlobalContext())
+  }, false);
+  llvm::FunctionType* putsType = FunctionType::get(int32ty,
+  {
+    int8ptrty
+  }, false);
+  llvm::FunctionType* printfType = FunctionType::get(int32ty,
+    {
+      int8ptrty
+    }, true);
+    llvm::FunctionType* freeType = FunctionType::get(voidty,
+    {
+        int8ptrty
+    }, false);
+    Function::Create(mallocType, GlobalValue::InternalLinkage, "malloc", current_module);
+    Function::Create(putsType, GlobalValue::InternalLinkage, "puts", current_module);
+  Function::Create(printfType, GlobalValue::InternalLinkage, "printf", current_module);
+  Function::Create(freeType, GlobalValue::InternalLinkage, "free", current_module);
 }

@@ -74,6 +74,6 @@ public:
   // -----------------------------
   virtual size_t SizeOfType(const std::string&) = 0;
 
-  virtual ~ICompilerEngine(){ }
+  virtual ~ICompilerEngine(){}
 };
 #endif // _ICOMPILER_ENGINE_INTERFACE_HPP_

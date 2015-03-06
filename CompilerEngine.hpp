@@ -41,6 +41,7 @@ public:
   void AddType(const std::string&, llvm::Type*);
   // ---------------------
   void PrintStacks();
+  // Returns size in bytes
   size_t SizeOfType(const std::string&);
 private:
   std::stack<IClass*> class_stak;
@@ -55,5 +56,7 @@ private:
   ValueSymbolTable*     current_lookup;
   Function*             main_function;
   DataLayout            dat_layout;
+private:
+    void add_c_std_fnct();
 };
 #endif // _COMPILER_ENGINE_CONTEXT_HPP_

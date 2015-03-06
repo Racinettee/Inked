@@ -18,6 +18,7 @@ void yyerror(const char *s) { printf("error at line: %llu %s\n", linecount, s); 
   NClass* nclass;
   std::vector<NVariableDeclaration*> *varvec;
   std::vector<NExpression*> *exprvec;
+  std::vector<NIdentifier*>* identvec;
   std::string *string;
   int token;
 }
@@ -30,7 +31,7 @@ void yyerror(const char *s) { printf("error at line: %llu %s\n", linecount, s); 
 %token <token> TBREAKKW TCONSTKW TCLSKW TCONTKW TDOKW TDBLKW TELSEKW
 %token <token> TENDKW TEXITKW TFORKW TFCTNKW TIFKW TLONGKW TUNLKW
 %token <token> TWHLKW TASKW TPROTOKW TNEWKW
-%token <token> TQUOTE TSQUOTE
+%token <token> TQUOTE TSQUOTE TCOLON
 %token <token> TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
 %token <token> TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT
 %token <token> TPLUS TMINUS TMUL TDIV
@@ -45,6 +46,7 @@ void yyerror(const char *s) { printf("error at line: %llu %s\n", linecount, s); 
 %type <expr> numeric expr string_literal
 %type <varvec> func_decl_args
 %type <exprvec> call_args
+%type <identvec> identifier_list
 %type <block> program stmts block
 %type <stmt> stmt var_decl func_decl class_decl if_stmt new_stmnt
 %type <token> comparison
@@ -97,43 +99,55 @@ if_stmt
 	$$ = new IfNode($3, $5->statements, new ElseNode(
 		$7->statements));
 	delete $5;
-}
-;
+};
+
 class_decl
 : TCLSKW ident stmts TENDKW {
 	$$ = new NClass($2->name,$3->statements);
 	delete $2; delete $3;
 }
-;
+| TCLSKW ident TCOLON identifier_list stmts TENDKW {
+	$$ = new NClass($2->name, $5->statements, *$4);
+	delete $2; delete $4; delete $5;
+};
 
-func_decl :
-			 /************************
-			  *  Function prototype
-			  ***********************/
-			   TPROTOKW ident {VariableList vl; NIdentifier type("void");$$ = new NFunctionPrototype(type, *$2, vl);}
-			 | TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident {$$=new NFunctionPrototype(*$7,*$2,*$4); delete $4;}
-			 /**************************
-			  * Function definition: function name ... end
-			  *************************/
-			 | TFCTNKW ident block {
-			 		//printf("Found function def: %s\n", $2->name.c_str());
-			 		VariableList vl;
-			 		//NIdentifier type("void");
-			 		$$ = new NFunctionDeclaration("void", *$2, vl, *$3);
-			 }
-			 /********************************
-			  * Function def: function name(...) ... end
-			  ********************************/
-			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN block {
-			 		// NIdentifier type("void");
-			 		$$ = new NFunctionDeclaration("void", *$2, *$4, *$6);
-			 }
-			 | TFCTNKW ident TASKW ident block {
-			 		VariableList vl;
-			 		$$ = new NFunctionDeclaration(*$4, *$2, vl, *$5);
-			 }
-			 | TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block { $$ = new NFunctionDeclaration(*$7, *$2, *$4, *$8); delete $4; }
-		    ;
+func_decl
+/************************
+*  Function prototype
+***********************/
+: TPROTOKW ident {
+	VariableList vl;
+	NIdentifier type("void");
+	$$ = new NFunctionPrototype(type, *$2, vl);
+}
+| TPROTOKW ident TLPAREN func_decl_args TRPAREN TASKW ident {
+	$$=new NFunctionPrototype(*$7,*$2,*$4);
+	delete $4;
+}
+/**************************
+* Function definition: function name ... end
+*************************/
+| TFCTNKW ident block {
+	//printf("Found function def: %s\n", $2->name.c_str());
+	VariableList vl;
+	//NIdentifier type("void");
+	$$ = new NFunctionDeclaration("void", *$2, vl, *$3);
+}
+/********************************
+* Function def: function name(...) ... end
+********************************/
+| TFCTNKW ident TLPAREN func_decl_args TRPAREN block {
+	// NIdentifier type("void");
+	$$ = new NFunctionDeclaration("void", *$2, *$4, *$6);
+}
+| TFCTNKW ident TASKW ident block {
+	VariableList vl;
+	$$ = new NFunctionDeclaration(*$4, *$2, vl, *$5);
+}
+| TFCTNKW ident TLPAREN func_decl_args TRPAREN TASKW ident block {
+	$$ = new NFunctionDeclaration(*$7, *$2, *$4, *$8);
+	delete $4;
+};
 
 func_decl_args : /*blank*/  { $$ = new VariableList(); }
         | var_decl { $$ = new VariableList(); $$->push_back($<var_decl>1); }
@@ -166,10 +180,12 @@ call_args : /*blank*/  { $$ = new ExpressionList(); }
 comparison : TCEQ | TCNE | TCLT | TCLE | TCGT | TCGE
          | TPLUS | TMINUS | TMUL | TDIV
          ;
-         
-new_stmnt : TNEWKW ident { 
+
+new_stmnt : TNEWKW ident {
 				// add a call to malloc
-				// bitcast to the type of the ident			
+				// bitcast to the type of the ident
+				$$ = new NewNode($2->name);
+				delete $2;
 			}
 
 %%

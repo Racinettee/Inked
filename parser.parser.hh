@@ -69,23 +69,24 @@ extern int yydebug;
     TNEWKW = 279,
     TQUOTE = 280,
     TSQUOTE = 281,
-    TCEQ = 282,
-    TCNE = 283,
-    TCLT = 284,
-    TCLE = 285,
-    TCGT = 286,
-    TCGE = 287,
-    TEQUAL = 288,
-    TLPAREN = 289,
-    TRPAREN = 290,
-    TLBRACE = 291,
-    TRBRACE = 292,
-    TCOMMA = 293,
-    TDOT = 294,
-    TPLUS = 295,
-    TMINUS = 296,
-    TMUL = 297,
-    TDIV = 298
+    TCOLON = 282,
+    TCEQ = 283,
+    TCNE = 284,
+    TCLT = 285,
+    TCLE = 286,
+    TCGT = 287,
+    TCGE = 288,
+    TEQUAL = 289,
+    TLPAREN = 290,
+    TRPAREN = 291,
+    TLBRACE = 292,
+    TRBRACE = 293,
+    TCOMMA = 294,
+    TDOT = 295,
+    TPLUS = 296,
+    TMINUS = 297,
+    TMUL = 298,
+    TDIV = 299
   };
 #endif
 
@@ -105,10 +106,11 @@ union YYSTYPE
   NClass* nclass;
   std::vector<NVariableDeclaration*> *varvec;
   std::vector<NExpression*> *exprvec;
+  std::vector<NIdentifier*>* identvec;
   std::string *string;
   int token;
 
-#line 112 "/home/steve/Documents/Inked/parser.parser.hh" /* yacc.c:1909  */
+#line 114 "/home/steve/Documents/Inked/parser.parser.hh" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

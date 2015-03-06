@@ -5,7 +5,7 @@ class NMethodCall : public NExpression {
 public:
     const NIdentifier& id;
     ExpressionList arguments;
-    NMethodCall(const NIdentifier& id, ExpressionList& arguments) :
+    NMethodCall(const NIdentifier& id, const ExpressionList& arguments) :
         id(id), arguments(arguments) { }
     NMethodCall(const NIdentifier& id) : id(id) { }
     virtual llvm::Value* codeGen(ICompilerEngine* context);

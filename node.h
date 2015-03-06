@@ -9,10 +9,11 @@ class ICompilerEngine;
 class NStatement;
 class NExpression;
 class NVariableDeclaration;
-
+class NIdentifier;
 typedef std::vector<NStatement*> StatementList;
 typedef std::vector<NExpression*> ExpressionList;
 typedef std::vector<NVariableDeclaration*> VariableList;
+typedef std::vector<NIdentifier*> IdentifierList;
 
 class Node {
 public:
